@@ -1,0 +1,28 @@
+@startuml
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+SHOW_PERSON_OUTLINE()
+
+Person("Reiziger", "Reiziger", "Stelt de reis samen en boekt de reis")
+Person("Reisagent", "ReisAgent", "Ondersteund een reiziger met het samen stellen van een reis")
+System("Triptop", "Triptop", "Laat een reiziger een reis samenstellen en boeken")
+System_Ext("EtenProvider", "EtenProvider (TakeAway, UberEats, etc..)", "Bouwsteen om eten te bestellen en restauranten te reserveren")
+System_Ext("VervoersProvider", "VervoersProvider (NS, Breng, KLM, etc..)", "Bouwsteen om vervoer te boeken")
+System_Ext("OvernachtingProvider", "OvernachtingProvider (Booking, AirBnB, etc..)", "Bouwsteen om de overnachting te boeken")
+System_Ext("IdentityProvider", "IdentityProvider", "Bouwsteen om in te loggen d.m.v. Google, Microsoft, etc..")
+System_Ext("BetalingsSysteem", "Betaling Systeem", "Bouwsteen om mee te betalen")
+System_Ext("ExcursieProvider", "ExcursieProvider (TripAdvisor, GetYourGuide, etc..)", "Bouwsteen om activiteiten te boeken")
+System_Ext("VervoersVerhuurProvider", "VervoersVerhuurProvider (Sixt, Wolt, etc..)", "Bouwsteen om je eigen vervoersmiddel te huren")
+
+Rel("Reiziger", "Triptop", "Stelt een reis samen en boekt deze")
+Rel("Reisagent", "Triptop", "Helpt een reiziger met het samenstellen en boeken van een reis")
+Rel("Triptop", "EtenProvider", "Bestelt en reserveert")
+Rel("Triptop", "VervoersProvider", "Vervoer voor de reis")
+Rel("Triptop", "OvernachtingProvider", "Boekt een overnachting")
+Rel("Triptop", "IdentityProvider", "Inloggen")
+Rel("Triptop", "BetalingsSysteem", "Betaling voor de reis")
+Rel("Triptop", "ExcursieProvider", "Boekt een activiteit")
+Rel("Triptop", "VervoersVerhuurProvider", "Huurt een vervoersmiddel")
+
+@enduml
