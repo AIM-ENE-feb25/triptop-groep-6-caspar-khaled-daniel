@@ -1,0 +1,28 @@
+@startuml C4_Elements
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(reiziger, "Reiziger", "Stelt de reis samen en boekt de reis")
+Person(reisAgent, "ReisAgent", "Ondersteund een reiziger met het samen stellen van een reis")
+
+Container(frontend, "Web Applicatie", "react", "Interface voor de reiziger en reisAgent" )
+Container(backend, "Backend", "java", "Behandelt de bedrijfslogica en gegevensverwerking")
+
+ContainerDb(db, "Database", "?", "Slaat de reis(pakket) data op")
+
+System_Ext(wireMock, "WireMock", "IdentityProvider")
+System_Ext(tripAdvisor, "TripAdvisor", "Biedt hotels, vluchten, restaurants en auto's aan")
+System_Ext(trail, "Trail API", "Biedt wandelroutes aan")
+System_Ext(mailGun, "MailGun", "Stuurt emails")
+System_Ext(textFlow, "TextFlow SMS API", "Stuurt SMS-berichten en verifieert")
+System_Ext(betalingsProvider, "BetalingsProvider(PayPal)", "Verwerkt betalingen")
+
+Rel(frontend, trail, "Haalt bouwsteen informatie op")
+Rel(frontend, tripAdvisor, "Haalt bouwsteen informatie op")
+
+Rel(backend, wireMock, "Logt in", "JSON/HTTPS")
+Rel(backend, mailGun, "Versturen email", "JSON/HTTPS")
+Rel(backend, textFlow, "Versturen SMS")
+Rel(backend, betalingsProvider, "Verstuurt betaalverzoeken")
+Rel(backend, db, "Verstuurt reis(pakket) data")
+
+@enduml
