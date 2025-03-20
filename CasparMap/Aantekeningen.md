@@ -31,3 +31,5 @@ Gemaakte keuzes:
     - Voor nu 1webapplicatie maar indien later nodig kunnen we altijd naar 2 verschillende frontends.
 Alle externe system naar de backend of sommige direct naar de frontend?
     - Extern systeem communiceert ALLEEN met de frontEnd ALS de backend NOOIT een de API call hoeft te doen
+Als we in de backend een Omio hebben waarbij we eerst info willen halen en daarna met een andere call betalen
+    - Geven we in een zin beide calls aan
