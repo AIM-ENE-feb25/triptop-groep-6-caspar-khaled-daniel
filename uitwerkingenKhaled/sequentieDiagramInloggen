@@ -1,18 +1,20 @@
 @startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Sequence.puml
 
-' Actoren en containers
-actor reiziger as "Reiziger"
-participant frontend as "Web Applicatie\n[React]"
-participant backend as "Backend\n[Spring Boot]"
-participant wireMock as "WireMock\n[IdentityProvider]"
+' Actor
+Person(reiziger, "Reiziger", "Stelt de reis samen en boekt de reis")
 
-' Volgorde van interacties
-reiziger -> frontend : Voert gebruikersnaam en wachtwoord in
-frontend -> backend : Verstuurt inloggegevens\n(JSON/HTTPS)
-backend -> wireMock : Verifieert gebruiker\n(JSON/HTTPS)
-wireMock --> backend : Inloggegevens met token\n(JSON/HTTPS)
-backend --> frontend : Token wordt teruggegeven\n(JSON/HTTPS)
-frontend --> reiziger : Toont resultaat (ingelogd)
+' Containers
+Container(frontend, "Web Applicatie", "React", "Biedt een interface voor de reiziger")
+Container(backend, "Backend", "Spring Boot", "Behandelt de bedrijfslogica en gegevensverwerking")
+System_Ext(wireMock, "WireMock", "IdentityProvider")
+
+' Interacties in volgorde
+Rel(reiziger, frontend, "Voert gebruikersnaam en wachtwoord in")
+Rel(frontend, backend, "Verstuurt inloggegevens", "JSON/HTTPS")
+Rel(backend, wireMock, "Verifieert gebruiker", "JSON/HTTPS")
+Rel(wireMock, backend, "Geeft token terug", "JSON/HTTPS")
+Rel(backend, frontend, "Geeft token terug", "JSON/HTTPS")
+Rel(frontend, reiziger, "Toont resultaat (ingelogd)")
 
 @enduml
