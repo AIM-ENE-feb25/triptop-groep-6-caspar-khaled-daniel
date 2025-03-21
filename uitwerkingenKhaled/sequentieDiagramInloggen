@@ -1,21 +1,18 @@
 @startuml
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Sequence.puml
 
+' Actoren en containers
+actor reiziger as "Reiziger"
+participant frontend as "Web Applicatie\n[React]"
+participant backend as "Backend\n[Spring Boot]"
+participant wireMock as "WireMock\n[IdentityProvider]"
 
-' Actoren
-Person(reiziger, "Reiziger", "Stelt de reis samen en boekt de reis")
-Container(frontend, "Web Applicatie", "react", "Biedt een interface voor de reiziger en reisAgent")
-Container(backend, "Backend", "java SpringBoot", "Behandelt de bedrijfslogica en gegevensverwerking")
-System_Ext(wireMock, "WireMock", "IdentityProvider")
-
-' Richtingen van interactie
-Rel_D(reiziger, frontend, "Voert gebruikersnaam en wachtwoord in")
-Rel_D(frontend, backend, "Verstuurt inloggegevens", "JSON/HTTPS")
-Rel_D(backend, wireMock, "Verifieert gebruiker", "JSON/HTTPS")
-
-' Resultaten
-Rel_U(wireMock, backend, "Geeft inloggegevens met token terug (bij geldige gegevens)", "JSON/HTTPS") 
-Rel_U(backend, frontend, "Geeft token terug", "JSON/HTTPS")
-Rel_U(frontend, reiziger, "Toont resultaat (ingelogd)")
+' Volgorde van interacties
+reiziger -> frontend : Voert gebruikersnaam en wachtwoord in
+frontend -> backend : Verstuurt inloggegevens\n(JSON/HTTPS)
+backend -> wireMock : Verifieert gebruiker\n(JSON/HTTPS)
+wireMock --> backend : Inloggegevens met token\n(JSON/HTTPS)
+backend --> frontend : Token wordt teruggegeven\n(JSON/HTTPS)
+frontend --> reiziger : Toont resultaat (ingelogd)
 
 @enduml
