@@ -1,0 +1,34 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Sequence.puml
+ 
+Person(reiziger, "Reiziger", "Stelt de reis samen en boekt de reis")
+Person(reisAgent, "ReisAgent", "Ondersteund een reiziger met het samen stellen van een reis")
+Container(frontend, "Web Applicatie", "react", "Biedt een interface voor de reiziger en reisAgent")
+Container(backend, "BackEnd", "Backend-applicaite")
+ContainerDb(db, "Database", "Sql/MongoDB??", "Slaat de reis(pakket) data op")
+System_Ext(auto, "AutoProvider", "Auto verhuurder")
+
+Rel(reiziger, frontend, "Vraagt om een auto te huren")
+Rel(frontend, backend, "Stuurt verzoek door")
+Rel(backend, db, "Slaat data voor het verzoek op")
+Rel(db, backend, "Geeft data mee dat reiziger een auto wil huren")
+Rel(backend, frontend, "Geeft data mee dat reiziger een auto wil huren")
+Rel(frontend, reisAgent, "Laat zien dat een reiziger een auto wil huren")
+Rel(reisAgent, auto, "Vraagt offerte(s) op voor auto verhuur")
+Rel(auto, reisAgent, "Stuurt offerte voor auto verhuur")
+Rel(reisAgent, frontend, "Stuurt auto verhuur optie's door")
+Rel(frontend, backend, "Stuurt data voor auto verhuur door")
+Rel(backend, db, "Slaat offerte op")
+Rel(db, backend, "Geeft data voor auto offerte mee")
+Rel(backend, frontend, "Geeft data offerte terug")
+Rel(frontend, reiziger, "Laat auto opties zien")
+Rel(reiziger, frontend, "Geeft akoord voor een auto optie")
+Rel(frontend, backend, "Stuurt auto opties door")
+Rel(backend, db, "Slaat auto optie op")
+' Reservering systeem erna/meteen al boeken zodat de auto niet genomen owrdt door iemand anders
+
+' Wij nemne het feedback systeem van de db niet hierin 
+' op dus als het opgeslagen is krijg je feedback maar dat 
+' staat hier niet in
+
+@enduml 
