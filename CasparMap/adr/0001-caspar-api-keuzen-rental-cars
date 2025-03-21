@@ -1,0 +1,46 @@
+Date: 21-03-2025
+
+# Status
+
+Undecided
+
+# Context
+
+Voor Triptop willen we de reiziger de mogelijkheid bieden om een auto te huren. We hebben hierbij de geo-locatie nodig en een aanbod aan auto's.
+
+# Considered Options
+
+| Forces      | Tripadvisor | Wolt | Booking |
+| ----------- | ----------- | ---- | ------- |
+| GeoLocatie | ++ | Geen API | ++ |
+| Hoeveelheid autos | -- Laat niet alle auto's zien in een bepaald gebied | Geen API | -- Laat niet alle auto's zien in een bepaald gebied |
+| Prijs klasse keuze | - Op te halen maar het hangt van 8 verschillende factoren af | Geen API | ++ Makkelijk de prijs te zien |
+
+*Keuze mogelijkheden*
+Tripadvisor, Wolt en Booking zijn al bekend als grote spelers op de markt, vandaar dat we alleen deze twee proberen.
+
+*Keuze criteria* 
+MustHave - Geo-locatie - Te laten zien op de kaart
+ShouldHave - Hoeveelheid autos beschikbaar - Groter aanbod voor de reizig
+ShoudlHave - Prijs klasse keuze - Betere keuze maken voor elke reiziger per prijs klasse
+
+## Andere optie
+Booking.com heeft op de site zelf we een goed systeem voor car rental alleen hiervoor zijn nog geen goeie API's beschikbaar om de data op te halen. Wij zouden dus zelf een API hiervoor moeten bouwen.
+
+# Decision
+
+Er zijn twee mindere opties mogelijk nu.
+
+Optie 1:
+We bouwen zelf een API die dit doet. Nadeel hiervan is dat wij niet weten hoe dit werkt en of dit mogelijk is
+
+Optie 2:
+Zij geven Reizigers de optie om met een Reisagent te communiceren die voor hun helpt handmatig een huur auto uit te kiezen.
+
+# Consequences
+
+Optie 1:
+We bieden geen API aan en de reisAgent zal tussen het rental car bedrijf en de reiziger staan om ze hierin te helpen.
+
+Optie 2:
+We moeten geld/tijd/werk investeren om een API hiervoor te maken of een bestaande API betalen om bepaalde requests toe te voegen. Ook weten we niet of dit kan kwa wetten en of Booking.com dit toelaat

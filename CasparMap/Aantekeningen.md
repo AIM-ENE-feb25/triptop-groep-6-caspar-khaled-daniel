@@ -33,3 +33,29 @@ Alle externe system naar de backend of sommige direct naar de frontend?
     - Extern systeem communiceert ALLEEN met de frontEnd ALS de backend NOOIT een de API call hoeft te doen
 Als we in de backend een Omio hebben waarbij we eerst info willen halen en daarna met een andere call betalen
     - Geven we in een zin beide calls aan
+Bij diagrammen met datastromen proberen we het woord terug te gebruiken wnr de data terug stroomt
+Bij het ContainerDiagram voor inloggen nemen wij geen database op omdat die bij registreren hoort en het gedeelte daarna om de data in te laden hoort bij een andere gedeelte.
+
+ADR criteria
+-Context verwijst naar criterias in Decision and CO
+-In Decision en Consequences staan geen nieuwe dingen
+-Duidelijk de keuze definieëren
+-Hoe ben je op de CO/criteria gekomen
+-Onder de CO moeten de redenen van je criteria staan
+
+
+LES 4:
+ADR1
+CO, prima om een ? te laten bij SQLite omdat er al genoeg +'s zijn bij JSON Java ivm de criteria.
+D, Keuze is logisch als je de text leest, maar dan had je net zo goed CO over kunnen slaan want geen van de criteria's overlappen.
+C, als je al weet dat PowerBI zwaar meeweegt moet je daarvanaf CO al naar kijken.
+
+ADR2
+Status???
+Context, komt niet overeen met de Consequences.
+
+ADR3
+
+ADR4
+D, er wordt geen Decision gemaakt.
+C, 
