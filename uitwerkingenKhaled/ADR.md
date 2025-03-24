@@ -1,7 +1,7 @@
 **Date:** 21-03-2025
 
 # Status
-Decided and accepted
+ Undecided
 # Context
 
 Voor Triptop willen we reizigers de mogelijkheid bieden om een accommodatie te boeken. Hiervoor zoeken we een bron waarbij de reiziger zijn overnachting(en) kan samenstellen op basis van zijn behoefte(s).

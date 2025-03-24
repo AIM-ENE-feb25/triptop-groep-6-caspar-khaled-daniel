@@ -9,13 +9,13 @@ public class AirbnbSearch {
         String checkinDate = "25/03/2025";
         String checkoutDate = "28/03/2025";
 
-        // Airbnb API request parameters
+       
         String location = "london";
         int guests = 2;
         int priceMin = 50;
         int priceMax = 300;
 
-        // Build the API request URL
+   
         String url = "https://airbnb19.p.rapidapi.com/api/v1/searchPropertyByLocationV2?" +
                 "location=" + location + "&checkin=" + checkinDate +
                 "&checkout=" + checkoutDate + "&adults=" + guests +
