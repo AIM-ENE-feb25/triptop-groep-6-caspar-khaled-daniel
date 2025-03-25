@@ -1,0 +1,16 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Container(backend, "Backend", "Spring Boot", "Behandelt de bedrijfslogica")
+
+Component(service, "TripService", "Java Class", "Beheert het reis(pakket)")
+Component(altHotelService, "AlternativesServiceHotel", "Java Class", "Biedt alternatieven hotels aan")
+Component(availHotelService, "AvailabilityServiceHotel", "Java Class", "Checkt beschikbaarheid hotels")
+Component(bookingAPI, "BookingIntegrationService", "Java Class", "Communiceert met Booking.com of AirBnB")
+
+Rel(backend, service, "Gebruikt")
+Rel(service, availService, "Checkt beschikbaarheid")
+Rel(availService, bookingAPI, "Vraagt beschikbaarheid op")
+Rel(service, altService, "Vraagt alternatieven")
+
+@enduml
