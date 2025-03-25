@@ -2,6 +2,7 @@
 
 - eerste principle in de SOLID principles
 
+- SOLID principles zijn richtlijnen voor het ontwikkelen van object oriented software.
 - een klasse maar één taak moet hebben en éé reden om de klasse aan te passen.
 - een klasse moet moet met maar entiteit. 
 
@@ -14,15 +15,15 @@ public class Report {
     public String reportContent;
 
     public void generateReport() {
-        // logic to generate report
+       
     }
 
     public void printReport() {
-        // logic to print report
+    
     }
 
     public void saveToFile(String filename) {
-        // logic to save report to file
+       
     }
 }
 ```
@@ -43,19 +44,19 @@ public class Report {
     public String reportContent;
 
     public void generateReport() {
-        // logic to generate report
+        
     }
 }
 
 public class ReportPrinter {
     public void print(Report report) {
-        // logic to print report
+    
     }
 }
 
 public class ReportSaver {
     public void saveToFile(Report report, String filename) {
-        // logic to save report to file
+      
     }
 }
 ```
@@ -71,6 +72,25 @@ Waarom is dit beter?
 
 
 ## Consequenties 
-SRP leidt tot kleinere klassen die gecombineerd worden om een complex systeem te creëren. Door SRP te implementeren, zorg je voor beter leesbare, onderhoudbare en beter testbare code.
 
-Dit zorgt ook voor maximale cohesion: hoe single minded één klasse is.
+### Design Properties
+#### Cohesion
+één klasse, één verantwoordelijkheid.
+Cohesion is hoe single minded een klasse is.
+
+#### Seperations of Concerns
+elke klasse focust op één 'concern'.
+
+
+### Voordelen
+- Betere leesbaarheid
+- Makkelijker onderhoud
+- Betere testbaarheid
+- Hogere hergebruikbaarheid
+- Minder kans op bugs
+
+### Nadelen
+- Meer classes
+- Complex
+- Meer afhandelijkheden
+- Boilerplate vode
