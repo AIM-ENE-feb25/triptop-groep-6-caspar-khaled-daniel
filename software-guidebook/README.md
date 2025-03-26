@@ -9,7 +9,7 @@ Dit software guidebook geeft een overzicht van de Triptop-applicatie. Het bevat 
 
 ## 2. Context
 
-![ContextDiagram](../CasparMap/ContextDiagram.png)
+![ContextDiagram](../DiagramFolder/ContextDiagram.png)
 
 > Werk zelf dit hoofdstuk uit met context diagrammen en een beschrijving van de context van de software.
 
@@ -81,12 +81,12 @@ Voordat deze casusomschrijving tot stand kwam, heeft de opdrachtgever de volgend
 ###     7.1. Containers
 
 
-![ContainerDiagram](../CasparMap/ContainerDiagram.png)
+![ContainerDiagram](../DiagramFolder/ContainerDiagram.png)
 
 ###     7.2. Components
 
-![SequentieHuurAutosDiagram](../CasparMap/SequentieDiagramRentalCars.png)
-![SequentieDiagramInloggen](../CasparMap/SequentieDiagramInloggen.png)
+![SequentieHuurAutosDiagram](../DiagramFolder/SequentieDiagramRentalCars.png)
+![SequentieDiagramInloggen](../DiagramFolder/SequentieDiagramInloggen.png)
 
 ###     7.3. Design & Code
 
