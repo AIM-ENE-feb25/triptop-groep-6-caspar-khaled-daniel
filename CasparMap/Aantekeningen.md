@@ -35,6 +35,8 @@ Als we in de backend een Omio hebben waarbij we eerst info willen halen en daarn
     - Geven we in een zin beide calls aan
 Bij diagrammen met datastromen proberen we het woord terug te gebruiken wnr de data terug stroomt
 Bij het ContainerDiagram voor inloggen nemen wij geen database op omdat die bij registreren hoort en het gedeelte daarna om de data in te laden hoort bij een andere gedeelte.
+Dynamische diagrammen zoveel mogelijk begrijpbaar door mensne zonder te veel kennis
+
 
 ADR criteria
 -Context verwijst naar criterias in Decision and CO
@@ -44,20 +46,18 @@ ADR criteria
 -Onder de CO moeten de redenen van je criteria staan
 
 
-LES 4:
-ADR1
-CO, prima om een ? te laten bij SQLite omdat er al genoeg +'s zijn bij JSON Java ivm de criteria.
-D, Keuze is logisch als je de text leest, maar dan had je net zo goed CO over kunnen slaan want geen van de criteria's overlappen.
-C, als je al weet dat PowerBI zwaar meeweegt moet je daarvanaf CO al naar kijken.
+C4 all components in a container execute the same process
+meaning: orthogonal ?
 
-ADR2
-Status???
-Context, komt niet overeen met de Consequences.
+https://c4model.com/abstractions/component
+Waarom heeft crashController wel info erbij staan maar de andere controllers niet?
+Moet de beschrijving er wel bij bij de repos?
 
-ADR3
-
-ADR4
-D, er wordt geen Decision gemaakt.
-C, 
-
-
+Eisen voor een component Diagram?
+- Technische benamingen mogen gebruikt worden
+- Duidelijke beschrijvingen bij elke component
+- Relaties beschrijven is geen MUST maar is wel handig
+- Zet bij frameworks de naam van de technologie en de benodigde annotatie eronder.
+    - Zet in het geval van Spring de spring annotatie in blokhaken eronder.
+- Diagram gaat over één container
+-  
