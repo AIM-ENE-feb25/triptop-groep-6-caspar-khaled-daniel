@@ -1,0 +1,25 @@
+@startuml
+
+
+interface FallbackAPI {
+    String handleFallback
+}
+
+class BookingFallbackAPI {
+    String handleFallback()
+}
+
+
+
+class TriptopController
+class TriptopService
+class TriptopRepository
+
+
+APIDataValidator <|-- BookingValidator
+
+TriptopController --> TriptopService
+TriptopService --> TriptopRepository
+TriptopService --> BookingValidator
+
+@enduml

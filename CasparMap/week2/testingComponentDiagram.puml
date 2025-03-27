@@ -1,11 +1,13 @@
 @startuml C4_Elements
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
-Component(bakka, "bakka")
-ComponentDb(db, "db")
+Component(trailController, "TrailController", "ServiceClass from springboot")
+Component(trailService, "TrailService", "ServiceClass from Springboot")
+Component(dataValidator, "DataValidator", "Validates the data you get from the API")
+Component(trailRepo, "TrialRepo", "DAO and Repo")
 
-Component_Ext(api, "api")
-
-Rel(bakka, db, "ja zo")
+Rel(trailController, trailService, "uses")
+Rel(trailService, dataValidator, "uses")
+Rel(trailService, trailRepo, "confrims valuable data")
 
 @enduml

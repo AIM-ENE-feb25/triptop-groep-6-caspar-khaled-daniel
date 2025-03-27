@@ -1,0 +1,32 @@
+@startuml C4_Elements
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Container(Frontend, "Web Applicatie", "Javascript en React", "Biedt een interface voor de reiziger en reisAgent")
+
+Container_Boundary(c4, "Component Backend Triptop") {
+    Component(TriptopController, "TriptopController", "Java Springboot", "Allows reizigers to add bouwstenen and any actors to process requests")
+    Component(TriptopService, "TriptopService", "Java Springboot", "Verwerkt de logica van de reizen")
+    Component(APIDataValidator, "APIDataValidator", "Java Springboot", "Valideert of de API nuttige data levert")
+    Component(TriptopRepository, "TriptopRepository", "Java Springboot", "Communiceert met de database voor reis gegevens")
+    Component(FallbackUnavailableAPI, "FallbackUnavailableAPI", "Java Springboot", "Handelt fallback af wanneer de API unavailable is")
+    Component(BookingAdapter, "BookingAdapter", "?", "Communiceert met de API's")
+}
+
+ContainerDb(db, "Database", "Sql/MongoDb", "Slaat de reis(pakket) data op")
+Container_Ext(api, "API's", "Booking, Trail, Trip, AirB&B")
+
+Rel(Frontend, TriptopController, "Geeft data voor reizen en api verzoeken door", "JSON/HTTPS")
+
+Rel(TriptopController, TriptopService, "Uses")
+Rel(TriptopService, TriptopRepository, "Uses")
+Rel(TriptopService, APIDataValidator, "Vraag confirmatie voor data")
+
+Rel(TriptopRepository, db, "Verstuurt reis(pakket) data")
+Rel(BookingAdapter, api, "Haal data op van", "JSON/HTTPS")
+
+Rel(TriptopService, BookingAdapter, "uses")
+Rel(BookingAdapter, FallbackUnavailableAPI, "Stuurt feedback message.")
+
+' Adapter -> communicatie met Externe APIs
+
+@enduml
