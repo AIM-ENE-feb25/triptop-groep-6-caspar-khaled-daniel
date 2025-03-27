@@ -40,7 +40,6 @@ class Vlucht {
     - maatschappij: String
     - vertrekLocatie: String
     - bestemming: String
-    - vertrekDatum: Date
     - prijs: double
     - vertrekDatumTijd: LocalDateTime
     - aankomstDatumTijd: LocalDateTime
@@ -50,11 +49,9 @@ VluchtController --> VluchtService : 1..1
 VluchtService --> VluchtRepository : 1..1
 VluchtService --> IExternVluchtAdapter : 1..*
 
-'Om het diagram duidelijk te houden zijn deze relaties niet gemaakt:
-
-'VluchtService --> Vlucht : 1..*
-'VluchtController --> Vlucht : 1..*
-'VluchtRepository --> Vlucht : 1..*
-'IExternVluchtAdapter --> Vlucht : 1..*
+VluchtService --> Vlucht : 1..*
+VluchtController --> Vlucht : 1..*
+VluchtRepository --> Vlucht : 1..*
+IExternVluchtAdapter --> Vlucht : 1..*
 
 @enduml
