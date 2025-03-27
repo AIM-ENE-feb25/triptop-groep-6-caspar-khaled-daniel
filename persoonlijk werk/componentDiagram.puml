@@ -1,0 +1,31 @@
+@startuml component diagram
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title component diagram Backend
+
+Container_Boundary(app, "Backend") {
+    
+    Component(vluchtcontroller, "vluchtcontroller", "Component: Spring controller", "Geeft gebruikers vluchtinformatie en boekt vluchten.")
+    Component(vluchtservice, "vluchtervice", "Component: Spring service", "Busisness logic om vluchtinformatie op te halen, vluchten te boeken en vluchten op te slaan.")
+    Component(vluchtrepository, "vluchtepository", "Component: Spring repository", "Slaat vluchten op in de database.")
+    Component(klmAdapter, "klmAdapter", "Component: Spring component", "Maakt api verzoek naar de klm api.")
+    Component(skyscannerAdapter, "skyscannerAdapter", "Component: Spring component", "Maakt api verzoek naar de skyscanner api.")
+
+    Rel(vluchtcontroller, vluchtservice, "Uses")
+    Rel(vluchtservice, vluchtrepository, "Uses")
+    Rel(vluchtservice, klmAdapter, "Uses")
+    Rel(vluchtservice, skyscannerAdapter, "Uses")
+}
+
+Container(webApplicatie, "Web Applicatie", "React", "Biedt een webinterface voor de reiziger en reisAgent.")
+ContainerDb(database, "Database", "SQL", "Slaat vluchtinformatie op.")
+System_Ext(klmApi, "KLM API", "Biedt vluchtinformatie aan en accepteert boekingen.")
+System_Ext(skyscannerApi, "Skyscanner API", "Biedt vluchtinformatie aan en accepteert boekingen.")
+
+Rel(webApplicatie, vluchtcontroller, "Maakt api verzoek", "JSON/HTTP")
+Rel(vluchtrepository, database, "Reads/Writes", "SQL")
+Rel(klmAdapter, klmApi, "Maakt api verzoek", "JSON/HTTPS")
+Rel(skyscannerAdapter, skyscannerApi, "Maakt api verzoek", "JSON/HTTPS")
+
+@enduml
+
