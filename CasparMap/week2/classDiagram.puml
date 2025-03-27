@@ -1,25 +1,41 @@
-@startuml
+@startuml 
 
-
-interface FallbackAPI {
-    String handleFallback
+class OvernachtingController {
+    - OvernachtingService overnachtingService
+    + List<Overnachting> zoekOvernachtingen(OvernachtingFilter overnachtingFilter)
+    + Overnachting slaOvernachtingOp(Overnachting overnachting)
+    + Overnachting haalOvernachtingOp(id?)
 }
 
-class BookingFallbackAPI {
-    String handleFallback()
+class OvernachtingService {
+    - OvernachtingRepository overnachtingRepository
+    + List<Overnachting> zoekOvernachtingen(OvernachtingFilter overnachtingFilter)
+    + Overnachting slaOvernachtingOp(Overnachting overnachting)
+    + Overnachting haalOvernachtingOp(id?)
+}
+
+class OvernachtingRepository {
+    + Overnachting slaOvernachtingOp(Overnachting overnachting)
+    + Overnachting haalOvernachtingOp(id?)
+}
+
+class OvernachtingAdapter {
+    + List<Overnachting> zoekOvernachtingen(OvernachtingFilter overnachtingFilter)
+}
+
+class Overnachting {
+
+}
+
+class OvernachtingFilter {
+    private LocalDate arrival_date;
+    private LocalDate departure_date;
+    private int room_qty;
+    private int guest_qty;
+    private String bbox;
 }
 
 
-
-class TriptopController
-class TriptopService
-class TriptopRepository
-
-
-APIDataValidator <|-- BookingValidator
-
-TriptopController --> TriptopService
-TriptopService --> TriptopRepository
-TriptopService --> BookingValidator
 
 @enduml
+
