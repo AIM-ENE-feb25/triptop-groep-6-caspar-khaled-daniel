@@ -23,9 +23,6 @@ Airbnb en Booking.com zijn bekende namen in de reisbranche.
 - **MustHave** – Real-time beschikbaarheid van accommodaties  
 - **MustHave** – Mogelijkheid tot filteren op prijs en voorzieningen  
 - **ShouldHave** – Mogelijkheid om bijna overal op de wereld een overnachting te boeken
-- **ShouldHave** – 
-
-
 
 ## Andere optie
 

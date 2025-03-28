@@ -46,19 +46,18 @@ Rel(vluchtservice, skyscannerAdapter, "Uses")
 Rel(skyscannerAdapter, FallbackUnavailableAPI, "Uses")
 Rel(klmAdapter, FallbackUnavailableAPI, "Uses")
 
-' Relaties - accommodatie
 Rel(accommodatieController, accommodatieService, "Uses")
 Rel(accommodatieService, accommodatieRepository, "Uses")
 Rel(accommodatieService, airBnbAdapter, "Uses")
-Rel(airBnbAdapter, airbnbApi, "Uses")
+Rel(airBnbAdapter, airbnbApi, "Maakt API-verzoek", "JSON/HTTPS")
 
-' Relaties - activiteit
+
 Rel(activiteitController, activiteitService, "Uses")
 Rel(activiteitService, activiteitRepository, "Uses")
 Rel(activiteitService, tripAdvisorAdapter, "Uses")
-Rel(tripAdvisorAdapter, tripAdvisorApi, "Uses")
+Rel(tripAdvisorAdapter, tripAdvisorApi, "Maakt API-verzoek", "JSON/HTTPS")
 
-' Database relaties
+
 Rel(vluchtrepository, database, "Leest/schrijft", "SQL")
 Rel(accommodatieRepository, database, "Leest/schrijft", "SQL")
 Rel(activiteitRepository, database, "Leest/schrijft", "SQL")
