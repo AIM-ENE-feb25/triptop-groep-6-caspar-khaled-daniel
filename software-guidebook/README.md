@@ -151,77 +151,91 @@ We moeten geld/tijd/werk investeren om een API hiervoor te maken of een bestaand
 
 # 8.2. ADR-002 **Date:** 21-03-2025
  
-# Status
-Decided and accepted
-# Context
- 
+
+## Status
+ Undecided
+## Context
+
 Voor Triptop willen we reizigers de mogelijkheid bieden om een accommodatie te boeken. Hiervoor zoeken we een bron waarbij de reiziger zijn overnachting(en) kan samenstellen op basis van zijn behoefte(s).
- 
-# Considered Options
- 
+
+## Considered Options
+
 | Forces                          | Airbnb | Booking          |
 |---------------------------------|------------|-----------------------|
 | Beschikbaarheid                 | ++         | ++                    |
 | Filter                          | ++         | +                     |
 Dekkingsgraad (aantal steden/regio's) | +                          | ++  
 | Flexibele data (voorzieningen, foto's, reviews) | ++         | ++                     |
- 
- 
+
+
 **Keuze mogelijkheden**  
 Airbnb en Booking.com zijn bekende namen in de reisbranche.
- 
+
 **Keuze criteria**  
 - **MustHave** – Real-time beschikbaarheid van accommodaties  
 - **MustHave** – Mogelijkheid tot filteren op prijs en voorzieningen  
 - **ShouldHave** – Mogelijkheid om bijna overal op de wereld een overnachting te boeken
-- **ShouldHave** –
- 
- 
- 
-## Andere optie
- 
-We kunnen zelf een database opbouwen waarin we partners/accommodaties laten aanmelden. Dan behouden we volledige controle, maar dit kost tijd en vereist een netwerk van verhuurders.
- 
-## Considerations
- 
+
+
+## Decisions
+
 Twee mogelijke routes:
- 
+
 **Optie 1:**  
 **Airbnb**  
 **Voordelen:**  
 - Veel reizigers geven de voorkeur aan een verblijf in een woonhuis of appartement i.p.v. een hotel.  
-- Airbnb biedt meer accedomaties voor grote groepen.
+- Airbnb biedt meer accommodaties voor grote groepen.
 - Airbnb is hierin de marktleider en biedt veel unieke accommodaties.  
- 
- 
+
+
 **Nadelen:**  
 - Minder conventionele hotels beschikbaar.  
 - Minder geschikt voor zakelijke reizigers die hotels prefereren.
- 
+
 ---
- 
+
 **Optie 2:**  
 **Booking.com**  
 **Voordelen:**  
 - Booking.com is de nummer 1 site voor het boeken van hotels.  
 - Biedt ook aanvullende diensten zoals vluchten en huurauto’s.  
 - Als we Booking ook voor de andere onderdelen gebruiken (vlucht, auto), is het handig om alles via één API te integreren.  
- 
+
 **Nadelen:**  
 - Minder unieke accommodaties zoals huizen of appartementen.  
- 
-## Decision
+
+**Optie 3:**
+**Booking.com & Airbnb**
+**Voordelen:** 
+- Gebruiker kan zelf kiezen bij welke provider die een accommodatie wil zoeken.
+- Grotere Dekking
+- Meer types accommodaties
+
+**Nadelen:**  
+-Twee verschillende API's betekent dubbele integratie
+- Verschillende datastructuren (bijv. filters, reviews, prijsformaten) moeten worden gestandaardiseerd
+- Verschillende gebruikerservaringen binnen dezelfde flow kunnen verwarrend zijn voor de gebruiker.
+
+ ## Decision
 We kiezen voor **Airbnb API** als primaire bron voor het aanbieden van accommodaties.
- 
+
 **Waarom Airbnb?**  
-Jongeren kiezen vaker voor unieke verblijven zoals appartementen of studio’s in plaats van standaard hotels. Airbnb is hier de marktleider in en past daarom beter bij onze en doelgroep.
- 
+Airbnb biedt uitgebreide filtermogelijkheden waarmee gebruikers hun verblijf nauwkeurig kunnen afstemmen op hun wensen. Zo kunnen ze eenvoudig accommodaties zoeken met specifieke voorzieningen zoals een keuken, zwembad of wasmachine. Daarnaast maakt het platform direct contact met de host mogelijk, waardoor reizigers extra informatie kunnen opvragen of specifieke vragen kunnen stellen over het verblijf.
+
+
 Booking.com blijft eventueel een optie voor toekomstig gebruik, bijvoorbeeld voor het combineren van andere diensten zoals vluchten en huurauto’s via één platform.
- 
+
 ## Consequences
- 
-- Beperkte aanbod aan conventionele hotels.
- 
+
+- Beperkt aanbod aan conventionele hotels.
+- Afwijkende annuleringsvoorwaarden per accommodatie, wat verwarrend kan zijn voor gebruikers.
+- Minder geschikt voor last-minute boekingen, waar hotels (zoals via Booking.com) doorgaans meer beschikbaarheid hebben.
+- Prijsvergelijking wordt moeilijker, omdat Airbnb meestal geen hotels aanbiedt en gebruikers geen directe vergelijking kunnen maken tussen hotel en woningaccommodaties.
+
+
+
+
 
 # 8.3. Externe service toevoegen
 
@@ -255,35 +269,34 @@ In dit diagram is te zien dat alle adapters gebruik maken van een adapter interf
 > [!TIP]
 > This section describes the resulting context, after applying the decision. All consequences should be listed here, not just the "positive" ones. A particular decision may have positive, negative, and neutral consequences, but all of them affect the team and project in the future.
 
-# 8.4. ADR-004 TITLE
+# 8.4. Hoe maak je de applicatie uitbreidbaar met nieuwe bouwstenen **Date:** 28-03-2025
 
-> [!TIP]
-> These documents have names that are short noun phrases. For example, "ADR 1: Deployment on Ruby on Rails 3.0.10" or "ADR 9: LDAP for Multitenant Integration". The whole ADR should be one or two pages long. We will write each ADR as if it is a conversation with a future developer. This requires good writing style, with full sentences organized into paragraphs. Bullets are acceptable only for visual style, not as an excuse for writing sentence fragments. (Bullets kill people, even PowerPoint bullets.)
 
-#### Context
+## Ontwerpvraag
+**Hoe maak je de applicatie uitbreidbaar met nieuwe bouwstenen?**
 
-> [!TIP]
-> This section describes the forces at play, including technological, political, social, and project local. These forces are probably in tension, and should be called out as such. The language in this section is value-neutral. It is simply describing facts about the problem we're facing and points out factors to take into account or to weigh when making the final decision.
+## Context
 
-#### Considered Options
+De applicatie moet kunnen omgaan met verschillende soorten bouwstenen. Met nadruk op aanpassingen in code te minimilasiren bij het toevoegen van een nieuwe bouwesteen.
+## Consideren Option
+**Strategy**
+![alt text](classDiagramStrategy.svg)
 
-> [!TIP]
-> This section describes the options that were considered, and gives some indication as to why the chosen option was selected.
+## Decision
 
-#### Decision
+Ik heb gekozen voor de **Strategy** design pattern. Dit vanwege de volgende redenen:
+- Nieuwe functionaliteit zonder bestaande code aan te passen
+- Gedrag wordt geïnjecteerd (los van service) --> lange koppeling en hoge cohesion.
+- Makkelijk te testen -> elke strategy heeft een aparte klasse met een specifiek verantwoordelijkheid
 
-> [!TIP]
-> This section describes our response to the forces/problem. It is stated in full sentences, with active voice. "We will …"
 
-#### Status
+Nadeel van dit allemaal is dat je veel klasses krijgt.
 
-> [!TIP]
-> A decision may be "proposed" if the project stakeholders haven't agreed with it yet, or "accepted" once it is agreed. If a later ADR changes or reverses a decision, it may be marked as "deprecated" or "superseded" with a reference to its replacement.
-
-#### Consequences
-
-> [!TIP]
-> This section describes the resulting context, after applying the decision. All consequences should be listed here, not just the "positive" ones. A particular decision may have positive, negative, and neutral consequences, but all of them affect the team and project in the future.
+## Consequences
+- Nieuwe bouwstenen kunnen eenvoudig worden toeggevoegd.
+- Elke strategy is los te testen
+- Responsibility seperation: Services = workdflow. strategys = logica.
+- Alleen strategy wijzigen bij wijzigingen van externa API'S 
 
 ### 8.5. ADR-005 TITLE
 
