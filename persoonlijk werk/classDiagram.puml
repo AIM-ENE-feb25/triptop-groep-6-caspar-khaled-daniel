@@ -10,9 +10,10 @@ class VluchtController {
 class VluchtService {
     - VluchtRepository vluchtRepository
     - List<IExternVluchtAdapter> adapters
+    - ExternVluchtAdapterFactory adapterFactory
     + List<Vlucht> zoekVluchten(String vertrek, String bestemming, Date datum)
+    + void boekVlucht(Vlucht vlucht, String api)
     + List<Vlucht> haalVluchtenOp(String username)
-    + void boekVlucht(Vlucht vlucht)
 }
 
 interface IExternVluchtAdapter {
@@ -31,11 +32,18 @@ class SkyscannerAdapter implements IExternVluchtAdapter {
 }
 
 class VluchtRepository {
-    + void slaOp(Vlucht vlucht, String username)
+    + void slaVluchtOp(Vlucht vlucht, String username)
     + List<Vlucht> haalVluchtenOp(String username)
 }
 
+
+class ExternVluchtAdapterFactory {
+    - Map<String, IExternVluchtAdapter> adapterMap
+    + IExternVluchtAdapter getAdapter(String api)
+}
+
 class Vlucht {
+    - api : String
     - vluchtNummer: String
     - maatschappij: String
     - vertrekLocatie: String
@@ -47,11 +55,13 @@ class Vlucht {
 
 VluchtController --> VluchtService : 1..1
 VluchtService --> VluchtRepository : 1..1
+ExternVluchtAdapterFactory --> IExternVluchtAdapter : 1..*
 VluchtService --> IExternVluchtAdapter : 1..*
+VluchtService --> ExternVluchtAdapterFactory : 1..1
 
-VluchtService --> Vlucht : 1..*
-VluchtController --> Vlucht : 1..*
-VluchtRepository --> Vlucht : 1..*
-IExternVluchtAdapter --> Vlucht : 1..*
+'VluchtService --> Vlucht : 1..*
+'VluchtController --> Vlucht : 1..*
+'VluchtRepository --> Vlucht : 1..*
+'IExternVluchtAdapter --> Vlucht : 1..*
 
 @enduml
