@@ -85,6 +85,8 @@ Voordat deze casusomschrijving tot stand kwam, heeft de opdrachtgever de volgend
 
 ###     7.2. Components
 
+![componentdiagram](../DiagramFolder/componentdiagram.svg)
+
 ![SequentieHuurAutosDiagram](../DiagramFolder/SequentieDiagramRentalCars.png)
 ![SequentieDiagramInloggen](../DiagramFolder/SequentieDiagramInloggen.png)
 
@@ -234,7 +236,7 @@ Voor triptop moeten er makkelijk nieuwe api's kunnen worden toegevoegd aan besta
 
 Voor dit probleem is er één oplossing bedacht. Deze oplossing is ontworpen via de adapter en factory patterns en is uitgewerkt in het klassediagram hieronder.
 
-![ClassDiagram](../DiagramFolder/classdiagramDaniel.png)
+![ClassDiagram](../DiagramFolder/classdiagramDaniel.svg)
 
 In dit diagram is te zien dat alle adapters gebruik maken van een adapter interface, gemaakt volgens het adapter pattern. Deze interface geeft alle methodes die door een adapter moeten worden geimplementeerd. Verder maakt de service klasse gebruik van een adapterfactory om zo nodig één van de adapters te kiezen voor een api-verzoek. Dit gaat volgens het factory pattern. Door gebruik te maken van deze twee patterns hoeft een nieuwe api alleen een adapter te maken die de adapter interface implementeerd. Hierdoor wordt deze nieuwe adapter automatisch gebruikt door de serviceklasse en kan de adapterfactory ook deze adapter kiezen voor gebruik.
 
