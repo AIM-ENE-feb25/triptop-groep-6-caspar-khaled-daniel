@@ -98,7 +98,7 @@ Voordat deze casusomschrijving tot stand kwam, heeft de opdrachtgever de volgend
 > [!IMPORTANT]
 > Voeg toe: 3 tot 5 ADR's die beslissingen beschrijven die zijn genomen tijdens het ontwerpen en bouwen van de software.
 
-### 8.1. Huur Auto's
+# 8.1. Huur Auto's
 Date: 21-03-2025
 
 # Status
@@ -147,7 +147,7 @@ Optie 2:
 We moeten geld/tijd/werk investeren om een API hiervoor te maken of een bestaande API betalen om bepaalde requests toe te voegen. Ook weten we niet of dit kan kwa wetten en of Booking.com dit toelaat
 
 
-### 8.2. ADR-002 **Date:** 21-03-2025
+# 8.2. ADR-002 **Date:** 21-03-2025
  
 # Status
 Decided and accepted
@@ -208,7 +208,7 @@ Twee mogelijke routes:
 **Nadelen:**  
 - Minder unieke accommodaties zoals huizen of appartementen.  
  
- # Decision
+## Decision
 We kiezen voor **Airbnb API** als primaire bron voor het aanbieden van accommodaties.
  
 **Waarom Airbnb?**  
@@ -216,42 +216,44 @@ Jongeren kiezen vaker voor unieke verblijven zoals appartementen of studio’s i
  
 Booking.com blijft eventueel een optie voor toekomstig gebruik, bijvoorbeeld voor het combineren van andere diensten zoals vluchten en huurauto’s via één platform.
  
-# Consequences
+## Consequences
  
 - Beperkte aanbod aan conventionele hotels.
  
 
-### 8.3. ADR-003 TITLE
+# 8.3. Externe service toevoegen
 
-> [!TIP]
-> These documents have names that are short noun phrases. For example, "ADR 1: Deployment on Ruby on Rails 3.0.10" or "ADR 9: LDAP for Multitenant Integration". The whole ADR should be one or two pages long. We will write each ADR as if it is a conversation with a future developer. This requires good writing style, with full sentences organized into paragraphs. Bullets are acceptable only for visual style, not as an excuse for writing sentence fragments. (Bullets kill people, even PowerPoint bullets.)
+28-03-2025
 
-#### Context
 
-> [!TIP]
-> This section describes the forces at play, including technological, political, social, and project local. These forces are probably in tension, and should be called out as such. The language in this section is value-neutral. It is simply describing facts about the problem we're facing and points out factors to take into account or to weigh when making the final decision.
+## Context
 
-#### Considered Options
+Voor triptop moeten er makkelijk nieuwe api's kunnen worden toegevoegd aan bestaande bouwstenen. Dit betekend dat op basis van de bestaande code, een nieuwe api aangesloten kan worden op deze code en direct werkt zonder de rest van de code aan te passen.
 
-> [!TIP]
-> This section describes the options that were considered, and gives some indication as to why the chosen option was selected.
+## Considered Options
 
-#### Decision
+Voor dit probleem is er één oplossing bedacht. Deze oplossing is ontworpen via de adapter en factory patterns en is uitgewerkt in het klassediagram hieronder.
+
+![ClassDiagram](../DiagramFolder/classdiagramDaniel.png)
+
+In dit diagram is te zien dat alle adapters gebruik maken van een adapter interface, gemaakt volgens het adapter pattern. Deze interface geeft alle methodes die door een adapter moeten worden geimplementeerd. Verder maakt de service klasse gebruik van een adapterfactory om zo nodig één van de adapters te kiezen voor een api-verzoek. Dit gaat volgens het factory pattern. Door gebruik te maken van deze twee patterns hoeft een nieuwe api alleen een adapter te maken die de adapter interface implementeerd. Hierdoor wordt deze nieuwe adapter automatisch gebruikt door de serviceklasse en kan de adapterfactory ook deze adapter kiezen voor gebruik.
+
+## Decision
 
 > [!TIP]
 > This section describes our response to the forces/problem. It is stated in full sentences, with active voice. "We will …"
 
-#### Status
+## Status
 
 > [!TIP]
 > A decision may be "proposed" if the project stakeholders haven't agreed with it yet, or "accepted" once it is agreed. If a later ADR changes or reverses a decision, it may be marked as "deprecated" or "superseded" with a reference to its replacement.
 
-#### Consequences
+## Consequences
 
 > [!TIP]
 > This section describes the resulting context, after applying the decision. All consequences should be listed here, not just the "positive" ones. A particular decision may have positive, negative, and neutral consequences, but all of them affect the team and project in the future.
 
-### 8.4. ADR-004 TITLE
+# 8.4. ADR-004 TITLE
 
 > [!TIP]
 > These documents have names that are short noun phrases. For example, "ADR 1: Deployment on Ruby on Rails 3.0.10" or "ADR 9: LDAP for Multitenant Integration". The whole ADR should be one or two pages long. We will write each ADR as if it is a conversation with a future developer. This requires good writing style, with full sentences organized into paragraphs. Bullets are acceptable only for visual style, not as an excuse for writing sentence fragments. (Bullets kill people, even PowerPoint bullets.)
