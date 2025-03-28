@@ -92,8 +92,7 @@ Voordat deze casusomschrijving tot stand kwam, heeft de opdrachtgever de volgend
 
 ###     7.3. Design & Code
 
-> [!IMPORTANT]
-> Voeg toe: Per ontwerpvraag een Class Diagram plus een Sequence Diagram van een aantal scenario's inclusief begeleidende tekst.
+![classDiagramOvernachtingen](../DiagramFolder/classDiagramOvernachtingenFallback.png)
 
 ## 8. Architectural Decision Records
 
@@ -297,36 +296,62 @@ Nadeel van dit allemaal is dat je veel klasses krijgt.
 - Elke strategy is los te testen
 - Responsibility seperation: Services = workdflow. strategys = logica.
 - Alleen strategy wijzigen bij wijzigingen van externa API'S 
-
-### 8.5. ADR-005 TITLE
-
-> [!TIP]
-> These documents have names that are short noun phrases. For example, "ADR 1: Deployment on Ruby on Rails 3.0.10" or "ADR 9: LDAP for Multitenant Integration". The whole ADR should be one or two pages long. We will write each ADR as if it is a conversation with a future developer. This requires good writing style, with full sentences organized into paragraphs. Bullets are acceptable only for visual style, not as an excuse for writing sentence fragments. (Bullets kill people, even PowerPoint bullets.)
-
-#### Context
-
-> [!TIP]
-> This section describes the forces at play, including technological, political, social, and project local. These forces are probably in tension, and should be called out as such. The language in this section is value-neutral. It is simply describing facts about the problem we're facing and points out factors to take into account or to weigh when making the final decision.
-
-#### Considered Options
-
-> [!TIP]
-> This section describes the options that were considered, and gives some indication as to why the chosen option was selected.
-
-#### Decision
-
-> [!TIP]
-> This section describes our response to the forces/problem. It is stated in full sentences, with active voice. "We will …"
-
-#### Status
-
-> [!TIP]
-> A decision may be "proposed" if the project stakeholders haven't agreed with it yet, or "accepted" once it is agreed. If a later ADR changes or reverses a decision, it may be marked as "deprecated" or "superseded" with a reference to its replacement.
-
-#### Consequences
-
-> [!TIP]
-> This section describes the resulting context, after applying the decision. All consequences should be listed here, not just the "positive" ones. A particular decision may have positive, negative, and neutral consequences, but all of them affect the team and project in the future.
+Date: 28-03-2025
+ 
+# Status
+ 
+In progress
+ 
+# Context
+ 
+Voor de API calls willen we een manier zodat er een fallback is wanneer de request mislukt. Hierbij moet er gedacht worden aan flexibiliteit in de requests.
+ 
+# Considered Options
+ 
+Wanneer er API call gedaan wordt en de call faalt wil ik een fallback. Dit betekent dat ik zelf kan kiezen hoevaak de call opnieuw geprobeerd wordt en indien mijn keuze van calls falen er message/andere oplossing wordt gehanteerd.
+ 
+## Spring Cloud Circuit Breaker
+ 
+Deze lijst is tot stand gekomen door geeksforgeeks en medium searches. Ik ga alleen voor Hystrix even kort laten zien hoe het werkt. Ook is dit gebruikt: https://www.mymiller.name/wordpress/spring_circuit_breaker/choosing-the-right-circuit-breaker-a-comparison-of-implementations/
+ 
+### Hystrix
+Wordt niet meer geupdate maar wordt nog veel gebruikt
+config file manier:
+    hystrix:
+    command:
+        "methodname":
+        circuitBreaker:
+            requestVolumeThreshold: 10
+ 
+Coding manier:
+    HystrixCommandProperties.Setter()
+  .withCircuitBreakerErrorThresholdPercentage(int value)\
+ 
+Op deze manieren kan per API kiezen hoeveel request je wil doen. Ook kan je de % van fails aangeven. Ook heb je een optie voor hoelang de circuit dicht blijft
+ 
+## Diagram
+| Forces | Hystrix | Resilience4J | Sentinal |
+| -----  | ----    | -----        | -----    |
+| Wordt actief geupdate | - | + | + |
+| Maakt gebruik van een RequestVolumeThreshold | + | + | + |
+| Maakt gebruik van een FailreRateThreshold | + | + | + |
+| Maakt gebruik van een waitDurationInOpenState | + | + | + |
+| Maakt gebruik van een slidingWindowSize | + | + | + |
+ 
+Hystrix valt al af omdat het niet geupdate wordt wat nu goed is maar niet handig is om mee bezig te gaan omdat dit een langdurig project is. Daarnaast hebben beide Forces de basis benodigdheden
+ 
+Resilience is makkelijk te implementeren. Minimal dependencies. Customization and flexible. relatief nieuw.
+ 
+Sentinel
+Limited support met Java. Niet direct geimplementeerd
+ 
+## Keuze prototype
+Mijn keuze voor het prototype wordt Resilience.
+ 
+# Decision
+ 
+ 
+# Consequences
 
 ## 9. Deployment, Operation and Support
 
