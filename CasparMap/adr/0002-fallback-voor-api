@@ -1,0 +1,56 @@
+Date: 28-03-2025
+
+# Status
+
+In progress
+
+# Context
+
+Voor de API calls willen we een manier zodat er een fallback is wanneer de request mislukt. Hierbij moet er gedacht worden aan flexibiliteit in de requests.
+
+# Considered Options
+
+Wanneer er API call gedaan wordt en de call faalt wil ik een fallback. Dit betekent dat ik zelf kan kiezen hoevaak de call opnieuw geprobeerd wordt en indien mijn keuze van calls falen er message/andere oplossing wordt gehanteerd.
+
+## Spring Cloud Circuit Breaker
+
+Deze lijst is tot stand gekomen door geeksforgeeks en medium searches. Ik ga alleen voor Hystrix even kort laten zien hoe het werkt. Ook is dit gebruikt: https://www.mymiller.name/wordpress/spring_circuit_breaker/choosing-the-right-circuit-breaker-a-comparison-of-implementations/
+
+### Hystrix
+Wordt niet meer geupdate maar wordt nog veel gebruikt
+config file manier:
+    hystrix:
+    command:
+        "methodname":
+        circuitBreaker:
+            requestVolumeThreshold: 10
+
+Coding manier:
+    HystrixCommandProperties.Setter()
+  .withCircuitBreakerErrorThresholdPercentage(int value)\
+
+Op deze manieren kan per API kiezen hoeveel request je wil doen. Ook kan je de % van fails aangeven. Ook heb je een optie voor hoelang de circuit dicht blijft
+
+## Diagram
+| Forces | Hystrix | Resilience4J | Sentinal | 
+| -----  | ----    | -----        | -----    | 
+| Wordt actief geupdate | - | + | + | 
+| Maakt gebruik van een RequestVolumeThreshold | + | + | + |
+| Maakt gebruik van een FailreRateThreshold | + | + | + |
+| Maakt gebruik van een waitDurationInOpenState | + | + | + |
+| Maakt gebruik van een slidingWindowSize | + | + | + |
+
+Hystrix valt al af omdat het niet geupdate wordt wat nu goed is maar niet handig is om mee bezig te gaan omdat dit een langdurig project is. Daarnaast hebben beide Forces de basis benodigdheden
+
+Resilience is makkelijk te implementeren. Minimal dependencies. Customization and flexible. relatief nieuw.
+
+Sentinel 
+Limited support met Java. Niet direct geimplementeerd
+
+## Keuze prototype
+Mijn keuze voor het prototype wordt Resilience.
+
+# Decision
+
+
+# Consequences
