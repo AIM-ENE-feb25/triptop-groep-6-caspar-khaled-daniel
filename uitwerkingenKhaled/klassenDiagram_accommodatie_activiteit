@@ -1,0 +1,57 @@
+@startuml
+title Klassediagram – Activiteit & Accommodatie
+
+package "Accommodatie" {
+    class AccommodatieController {
+        +getAccommodatie(s)()
+        +boekAccommodatie()
+    }
+
+    class AccommodatieService {
+        +haalAccommodatie(s)Op()
+        +verwerkBoeking()
+    }
+
+    class AccommodatieRepository {
+        +save()
+        +findById()
+        +findAll()
+    }
+
+    class AirBnbAdapter {
+        +haalDataVanAirbnb()
+        +stuurBoeking()
+    }
+
+    AccommodatieController --> AccommodatieService : uses
+    AccommodatieService --> AccommodatieRepository : uses
+    AccommodatieService --> AirBnbAdapter : uses
+}
+
+package "Activiteit" {
+    class ActiviteitController {
+        +getActiviteit(en)()
+        +boekActiviteit()
+    }
+
+    class ActiviteitService {
+        +haalActiviteit(en)Op()
+        +verwerkBoeking()
+    }
+
+    class ActiviteitRepository {
+        +save()
+        +findById()
+        +findAll()
+    }
+
+    class TripAdvisorAdapter {
+        +haalDataVanTripAdvisor()
+        +stuurBoeking()
+    }
+
+    ActiviteitController --> ActiviteitService : uses
+    ActiviteitService --> ActiviteitRepository : uses
+    ActiviteitService --> TripAdvisorAdapter : uses
+}
+@enduml

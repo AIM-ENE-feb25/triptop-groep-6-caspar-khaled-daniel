@@ -24,11 +24,8 @@ Airbnb en Booking.com zijn bekende namen in de reisbranche.
 - **MustHave** – Mogelijkheid tot filteren op prijs en voorzieningen  
 - **ShouldHave** – Mogelijkheid om bijna overal op de wereld een overnachting te boeken
 
-## Andere optie
 
-We kunnen zelf een database opbouwen waarin we partners/accommodaties laten aanmelden. Dan behouden we volledige controle, maar dit kost tijd en vereist een netwerk van verhuurders.
-
-## Considerations
+## Decisions
 
 Twee mogelijke routes:
 
@@ -36,7 +33,7 @@ Twee mogelijke routes:
 **Airbnb**  
 **Voordelen:**  
 - Veel reizigers geven de voorkeur aan een verblijf in een woonhuis of appartement i.p.v. een hotel.  
-- Airbnb biedt meer accedomaties voor grote groepen.
+- Airbnb biedt meer accommodaties voor grote groepen.
 - Airbnb is hierin de marktleider en biedt veel unieke accommodaties.  
 
 
@@ -56,19 +53,34 @@ Twee mogelijke routes:
 **Nadelen:**  
 - Minder unieke accommodaties zoals huizen of appartementen.  
 
+**Optie 3:**
+**Booking.com & Airbnb**
+**Voordelen:** 
+- Gebruiker kan zelf kiezen bij welke provider die een accommodatie wil zoeken.
+- Grotere Dekking
+- Meer types accommodaties
+
+**Nadelen:**  
+-Twee verschillende API's betekent dubbele integratie
+- Verschillende datastructuren (bijv. filters, reviews, prijsformaten) moeten worden gestandaardiseerd
+- Verschillende gebruikerservaringen binnen dezelfde flow kunnen verwarrend zijn voor de gebruiker.
+
  # Decision
 We kiezen voor **Airbnb API** als primaire bron voor het aanbieden van accommodaties.
 
 **Waarom Airbnb?**  
-Jongeren kiezen vaker voor unieke verblijven zoals appartementen of studio’s in plaats van standaard hotels. Airbnb is hier de marktleider in en past daarom beter bij onze en doelgroep.
+Airbnb biedt uitgebreide filtermogelijkheden waarmee gebruikers hun verblijf nauwkeurig kunnen afstemmen op hun wensen. Zo kunnen ze eenvoudig accommodaties zoeken met specifieke voorzieningen zoals een keuken, zwembad of wasmachine. Daarnaast maakt het platform direct contact met de host mogelijk, waardoor reizigers extra informatie kunnen opvragen of specifieke vragen kunnen stellen over het verblijf.
+
+
 
 Booking.com blijft eventueel een optie voor toekomstig gebruik, bijvoorbeeld voor het combineren van andere diensten zoals vluchten en huurauto’s via één platform.
 
 # Consequences
 
-- Beperkte aanbod aan conventionele hotels.
-
-
+- Beperkt aanbod aan conventionele hotels.
+- Afwijkende annuleringsvoorwaarden per accommodatie, wat verwarrend kan zijn voor gebruikers.
+- Minder geschikt voor last-minute boekingen, waar hotels (zoals via Booking.com) doorgaans meer beschikbaarheid hebben.
+- Prijsvergelijking wordt moeilijker, omdat Airbnb meestal geen hotels aanbiedt en gebruikers geen directe vergelijking kunnen maken tussen hotel en woningaccommodaties.
 
 
 
