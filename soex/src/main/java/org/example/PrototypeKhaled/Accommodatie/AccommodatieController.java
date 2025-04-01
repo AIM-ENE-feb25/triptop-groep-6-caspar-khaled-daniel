@@ -1,4 +1,4 @@
-package org.example.PrototypeKhaled;
+package org.example.PrototypeKhaled.Accommodatie;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
