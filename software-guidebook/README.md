@@ -11,12 +11,11 @@ Dit software guidebook geeft een overzicht van de Triptop-applicatie. Het bevat 
 
 ![ContextDiagram](../DiagramFolder/ContextDiagram.png)
 
-> Werk zelf dit hoofdstuk uit met context diagrammen en een beschrijving van de context van de software.
+Op basis van de casus hebben wij een contextdiagram opgesteld om een eerste beeld te geven van de applicatie. Hierin is te zien met wie de applicatie allemaal praat, gebruikers en externe systemen. Ook is de functionaliteit aangegeven van de applicatie en de externe systemen. 
 
-Toelichting op de context van de software inclusief System Context Diagram:
-* Functionaliteit
-* Gebruikers
-* Externe systemen
+Allereerst zijn er 2 gebruikers aanwezig die gebruik kunnen maken van het systeem. De gebruiker wil een reis samenstellen en doet dit door gebruik te maken van het systeem. Ook is er een reisagent die twee functies heeft. Hij kan hulp bieden bij het samenstellen van een reis voor de gebruiker. Ook kan de reisagent een reispakket maken. Dit is een pakket dat de reisagent maakt als voorbeeldreis en deze kan de gebruiker dan gebruiken. Dit houdt in dat hij deze reis kan kiezen en zo nodig aanpassen naar zijn wensen. 
+
+Verder maakt het systeem gebruik van verschillende externe systemen. Deze systemen hebben allemaal hun eigen functie voor het systeem. Zo zijn er externe systemen voor alle bouwstenen binnen de applicatie. Verder is er een identity provider om in te loggen in de applicatie. Ook is er nog een betalingssysteem om de reis te betalen.
 
 ## 3. Functional Overview
 
@@ -93,6 +92,14 @@ Voordat deze casusomschrijving tot stand kwam, heeft de opdrachtgever de volgend
 ###     7.3. Design & Code
 
 ![classDiagramOvernachtingen](../DiagramFolder/classDiagramOvernachtingenFallback.png)
+
+HIER KOMT DANIEL CLASS DIAGRAM
+
+Dit klassediagram is gemaakt en gecorrigeerd naar aanleiding van het gemaakte prototype "zie hoofdstuk 8.3". Naar aanleidng van de 1e verie is de repository verwijderd omdat dit geen toegevoegde waarde had voor het prototype. 
+
+Verder is dit ontwerp gemaakt op basis van het adapter pattern om te communiceren met alle api's. Elke api krijgt zijn eigen adapterklasse om de unieke manier van communiceren te gebruiken. Ook is er gebruik gemaakt van een factoryklasse. Dit houdt in dat deze factory gebruikt wordt om een specifieke api te gebruiken. Bij het boeken moet er een specifieke api gekozen worden om de vlucht te boeken en deze wordt gekozen door de frontend en gebruikt door de factory om deze aan te wijzen aan de service. Hieronder in het sequentiediagram is het volledige pad te zien voor het zoeken en boeken van een vlucht volgens dit prototype.
+
+SEQUENTIEDIAGRAM DANIEL
 
 ## 8. Architectural Decision Records
 
@@ -255,13 +262,18 @@ In dit diagram is te zien dat alle adapters gebruik maken van een adapter interf
 
 ## Decision
 
-> [!TIP]
-> This section describes our response to the forces/problem. It is stated in full sentences, with active voice. "We will …"
+Doormiddel van een prototype hebben we bewezen dat dit ontwerp volledig werkt. Dit betekend dus dat een nieuwe service kan worden toegevoegd door een klasse te maken die de interface implementeerd en contact maakt met de api. Door alleen deze klasse correct te maken kan de service automatisch gebruik maken van deze nieuwe adapter en api.
+
+Wel is er tijdens het bouwen van het prototype nog een aantal aanpassingen gedaan in de code. Zo is er een getApi() toegevoegd om makkelijk aan de namen van de api's te komen. Hierdoor kan de factory automatisch zoeken op alle api's en de juiste api terug geven voor gebruik. 
+
+Verder is de repository klasse niet gemaakt omdat dit niks toevoegd aan de vraagstelling.
+
+Dus doormiddel van dit prototype is aangetoond dat dit ontwerp ook in de praktijk gebruikt kan worden.
+
 
 ## Status
 
-> [!TIP]
-> A decision may be "proposed" if the project stakeholders haven't agreed with it yet, or "accepted" once it is agreed. If a later ADR changes or reverses a decision, it may be marked as "deprecated" or "superseded" with a reference to its replacement.
+accepted
 
 ## Consequences
 
