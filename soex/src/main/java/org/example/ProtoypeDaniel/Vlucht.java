@@ -23,7 +23,6 @@ public class Vlucht {
         this.aankomstDatumTijd = aankomstDatumTijd;
     }
 
-    // Getters and Setters
     public String getApi() {
         return api;
     }

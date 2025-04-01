@@ -18,15 +18,18 @@ public class VluchtController {
 
     @GetMapping("/zoek")
     public List<Vlucht> zoekVluchten(@RequestParam String vertrek,
-                                     @RequestParam String bestemming) {
-        LocalDate datum = LocalDate.of(2025, 3, 31); // Hardcoded date (YYYY, MM, DD)
-        return vluchtService.zoekVluchten(vertrek, bestemming, datum);
+                                     @RequestParam String bestemming,
+                                     @RequestParam String datum) {
+        datum = datum.trim();
+
+        LocalDate parsedDatum = LocalDate.parse(datum);
+        return vluchtService.zoekVluchten(vertrek, bestemming, parsedDatum);
     }
 
+
     @PostMapping("/boek")
-    public void boekVlucht(@RequestParam Vlucht vlucht,
-                           @RequestParam String username) {
-        vluchtService.boekVlucht(vlucht, username);
+    public String boekVlucht(@RequestBody BoekVluchtDTO boekVluchtDTO) {
+        return vluchtService.boekVlucht(boekVluchtDTO.getVlucht(), boekVluchtDTO.getUsername());
     }
 
     @GetMapping("/ophalen")

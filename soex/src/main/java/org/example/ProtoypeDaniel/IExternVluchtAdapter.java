@@ -6,5 +6,9 @@ import java.util.List;
 
 public interface IExternVluchtAdapter {
     List<Vlucht> zoekVluchten(String vertrek, String bestemming, LocalDate datum);
-    void boekVlucht(Vlucht vlucht);
+
+    String boekVlucht(Vlucht vlucht);
+
+    String getApi();
+
 }
