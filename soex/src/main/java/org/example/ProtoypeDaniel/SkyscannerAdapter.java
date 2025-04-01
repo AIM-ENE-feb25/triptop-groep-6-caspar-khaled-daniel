@@ -1,56 +1,55 @@
 package org.example.ProtoypeDaniel;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.JsonNode;
-import kong.unirest.Unirest;
+import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+@Component("Skyscanner")
 public class SkyscannerAdapter implements IExternVluchtAdapter {
-
-    // Define your API key here
-    private static final String RAPIDAPI_KEY = "YOUR_RAPIDAPI_KEY"; // Replace with your RapidAPI key
-    private static final String RAPIDAPI_HOST = "skyscanner89.p.rapidapi.com";
 
     @Override
     public List<Vlucht> zoekVluchten(String vertrek, String bestemming, LocalDate datum) {
-        // Convert the Date object to the required format (yyyy-MM-dd)
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = dateFormat.format(datum);
+        List<Vlucht> vluchten = new ArrayList<>();
 
-        // Build the URL dynamically using the parameters
-        String url = String.format(
-                "https://%s/flights/one-way/list?origin=%s&originId=27537542&destination=%s&destinationId=95673827&date=%s",
-                RAPIDAPI_HOST, vertrek, bestemming, formattedDate
+        //testdata wegens niet werkende api.
+        Vlucht vlucht1 = new Vlucht(
+                "Skyscanner",
+                "AF2001",
+                "Air France",
+                "Paris",
+                "London",
+                129.99,
+                LocalDateTime.of(2025, 4, 1, 8, 30),
+                LocalDateTime.of(2025, 4, 1, 9, 45)
         );
 
-        try {
-            // Send the GET request to the Skyscanner API using Unirest
-            HttpResponse<JsonNode> response = Unirest.get(url)
-                    .header("x-rapidapi-key", RAPIDAPI_KEY)
-                    .header("x-rapidapi-host", RAPIDAPI_HOST)
-                    .asJson();
+        Vlucht vlucht2 = new Vlucht(
+                "Skyscanner",
+                "LH3001",
+                "Lufthansa",
+                "Frankfurt",
+                "Tokyo",
+                899.99,
+                LocalDateTime.of(2025, 4, 2, 22, 0),
+                LocalDateTime.of(2025, 4, 3, 15, 30)
+        );
 
-            // Check if the response status is OK (200)
-            if (response.getStatus() == 200) {
-                // Print the body of the response to the console
-                System.out.println("Response Body: " + response.getBody().toString());
-            } else {
-                // Handle error (non-200 response)
-                System.out.println("Error: " + response.getStatus());
-            }
-        } catch (Exception e) {
-            // Handle exceptions (e.g., network issues)
-            e.printStackTrace();
-        }
+        vluchten.add(vlucht1);
+        vluchten.add(vlucht2);
 
-        return null; // You can return the flight list if needed later
+        return vluchten;
     }
 
     @Override
-    public void boekVlucht(Vlucht vlucht) {
-        System.out.println("test");
+    public String boekVlucht(Vlucht vlucht) {
+        return"Skyscanner";
+    }
+
+    @Override
+    public String getApi() {
+        return "Skyscanner";
     }
 }

@@ -8,13 +8,12 @@ import java.util.*;
 
 @Service
 public class VluchtService {
-    private final VluchtRepository vluchtRepository;
+
     private final ExternVluchtAdapterFactory adapterFactory;
     private final List<IExternVluchtAdapter> adapters;
 
     @Autowired
-    public VluchtService(VluchtRepository vluchtRepository, ExternVluchtAdapterFactory adapterFactory, List<IExternVluchtAdapter> adapters) {
-        this.vluchtRepository = vluchtRepository;
+    public VluchtService(ExternVluchtAdapterFactory adapterFactory, List<IExternVluchtAdapter> adapters) {
         this.adapterFactory = adapterFactory;
         this.adapters = adapters;
     }
@@ -27,15 +26,17 @@ public class VluchtService {
         return result;
     }
 
-    public void boekVlucht(Vlucht vlucht, String username) {
-        IExternVluchtAdapter adapter = adapterFactory.getAdapter(vlucht.getApi());
-        if (adapter != null) {
-            adapter.boekVlucht(vlucht);
-            vluchtRepository.slaVluchtOp(vlucht, username);
-        }
+    public String boekVlucht(Vlucht vlucht, String username) {
+        String api = vlucht.getApi();
+
+        IExternVluchtAdapter adapter = adapterFactory.getAdapter(api);
+        String response = adapter.boekVlucht(vlucht);
+        //sla vlucht op in DB
+        return(response);
     }
 
     public List<Vlucht> haalVluchtenOp(String username) {
-        return vluchtRepository.findByUsername(username);
+        //haal vluchten van gebruiker op uit DB
+        return new ArrayList<>();
     }
 }
