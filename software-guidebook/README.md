@@ -93,13 +93,17 @@ Voordat deze casusomschrijving tot stand kwam, heeft de opdrachtgever de volgend
 
 ![classDiagramOvernachtingen](../DiagramFolder/classDiagramOvernachtingenFallback.png)
 
-HIER KOMT DANIEL CLASS DIAGRAM
+![classDiagramExterneServices](../DiagramFolder/classDaigramExterneServices.svg)
 
 Dit klassediagram is gemaakt en gecorrigeerd naar aanleiding van het gemaakte prototype "[8.3. Externe service toevoegen](#83-externe-service-toevoegen)". Naar aanleidng van de 1e verie is de repository verwijderd omdat dit geen toegevoegde waarde had voor het prototype. 
 
 Verder is dit ontwerp gemaakt op basis van het adapter pattern om te communiceren met alle api's. Elke api krijgt zijn eigen adapterklasse om de unieke manier van communiceren te gebruiken. Ook is er gebruik gemaakt van een factoryklasse. Dit houdt in dat deze factory gebruikt wordt om een specifieke api te gebruiken. Bij het boeken moet er een specifieke api gekozen worden om de vlucht te boeken en deze wordt gekozen door de frontend en gebruikt door de factory om deze aan te wijzen aan de service. Hieronder in het sequentiediagram is het volledige pad te zien voor het zoeken en boeken van een vlucht volgens dit prototype.
 
-SEQUENTIEDIAGRAM DANIEL
+![sequentieDiagram](../DiagramFolder/SequentieDiagramExterneServices.svg)
+
+In dit diagram is te zien hoe de flow van het systeem werkt. De frontend stuurt een verzoek naar de controller om vluchten te zoeken. Deze controller geeft dit door aan de vluchtservices die vervolgens ij alle adapters langsgaat om de vluchten op te zoeken. Deze adapters zoeken via een vertek, bestemming en de datum vervolgens alle beschikbare vluchten. De lijst met alle vluchten van alle adapters wordt vervolgens terug gestuurd naar de frontend.
+
+Daarnaast kan de frontend ook een vlucht object sturen naar de backend om een vlucht te boeken. Dit object wordt naar de controller gestuurd die het doorgeeft aan de service. De service haalt de naam van de gebruikte api voor de vlucht uit het object en stuurt dit naar de factory. De factory haalt via spring dependency injection een lijst op met alle beschikbare adapters, geimplementeerd volgens de interface. Vervolgens zoekt de factory de juiste adapter volgens de meegegeven api van de service en stuurt de correcte adapter terug naar de service. Tot slot stuurt de service het vlucht object door naar de correcte adapter die een boeking plaatst bij de api. Daarna wordt er feedback terug gegeven naar uiteindelijk de frontend.
 
 ## 8. Architectural Decision Records
 
