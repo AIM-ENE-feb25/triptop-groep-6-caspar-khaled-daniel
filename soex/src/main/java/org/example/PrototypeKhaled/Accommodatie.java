@@ -1,14 +1,12 @@
-package org.example.PrototypeKhaled.Activiteit;
+package org.example.PrototypeKhaled;
 
-import org.example.PrototypeKhaled.BouwStatus;
-import org.example.PrototypeKhaled.Bouwsteen;
 
-public class Activiteit implements Bouwsteen {
+public class Accommodatie implements Bouwsteen {
     private Long id;
     private String naam;
     private BouwStatus status;
 
-    public Activiteit (Long id, String naam, BouwStatus status) {
+    public Accommodatie(Long id, String naam, BouwStatus status) {
         this.id = id;
         this.naam = naam;
         this.status = status;
@@ -36,7 +34,7 @@ public class Activiteit implements Bouwsteen {
 
     @Override
     public String toString() {
-        return "Activiteit{" +
+        return "Accommodatie{" +
                 "id=" + id +
                 ", naam='" + naam + '\'' +
                 ", status=" + status +
