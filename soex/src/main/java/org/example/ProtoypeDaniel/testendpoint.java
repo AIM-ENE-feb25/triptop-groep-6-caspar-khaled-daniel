@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //Deze klasse is geschreven om een api te testen om te gebruiken.
+//na testen wat de gratis data al verbruikt.
 
 @RestController
 public class testendpoint {
@@ -39,23 +40,19 @@ public class testendpoint {
             JsonNode rootNode = objectMapper.readTree(response.getBody());
             JsonNode topFlightsNode = rootNode.path("data").path("itineraries").path("topFlights");
 
-            // Iterate through the flight data and extract relevant details
             for (JsonNode flightNode : topFlightsNode) {
-                // Extract flight details
                 String vluchtNummer = flightNode.path("flights").get(0).path("flight_number").asText();
                 String maatschappij = flightNode.path("flights").get(0).path("airline").asText();
                 String vertrekLocatie = flightNode.path("flights").get(0).path("departure_airport").path("airport_name").asText();
                 String bestemming = flightNode.path("flights").get(0).path("arrival_airport").path("airport_name").asText();
                 double prijs = flightNode.path("price").asDouble();
 
-                // Parse departure and arrival times
                 String vertrekDatumTijdStr = flightNode.path("departure_time").asText();
                 String aankomstDatumTijdStr = flightNode.path("arrival_time").asText();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy hh:mm a");
                 LocalDateTime vertrekDatumTijd = LocalDateTime.parse(vertrekDatumTijdStr, formatter);
                 LocalDateTime aankomstDatumTijd = LocalDateTime.parse(aankomstDatumTijdStr, formatter);
 
-                // Create a Vlucht object and add it to the list
                 Vlucht vlucht = new Vlucht(
                         "Google Flights API",
                         vluchtNummer,
