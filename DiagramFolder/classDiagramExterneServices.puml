@@ -1,0 +1,69 @@
+@startuml class diagram
+
+class VluchtController {
+    - VluchtService vluchtService
+    + List<Vlucht> zoekVluchten(String vertrek, String bestemming, Date datum)
+    + void boekVlucht(BoekVluchtDTO boekVluchtDTO)
+}
+
+class VluchtService {
+    - VluchtRepository vluchtRepository
+    - List<IExternVluchtAdapter> adapters
+    - ExternVluchtAdapterFactory adapterFactory
+    + List<Vlucht> zoekVluchten(String vertrek, String bestemming, Date datum)
+    + void boekVlucht(Vlucht vlucht, String username)
+}
+
+interface IExternVluchtAdapter {
+    + List<Vlucht> zoekVluchten(String vertrek, String bestemming, Date datum)
+    + void boekVlucht(Vlucht vlucht)
+    + String getApi()
+}
+
+class KLMAdapter implements IExternVluchtAdapter {
+    + List<Vlucht> zoekVluchten(String vertrek, String bestemming, Date datum)
+    + void boekVlucht(Vlucht vlucht)
+    + String getApi()
+}
+
+class SkyscannerAdapter implements IExternVluchtAdapter {
+    + List<Vlucht> zoekVluchten(String vertrek, String bestemming, Date datum)
+    + void boekVlucht(Vlucht vlucht)
+    + String getApi()
+    + List<Vlucht> sorteerVlcuhten(String jsonData)
+}
+
+class ExternVluchtAdapterFactory {
+    - Map<String, IExternVluchtAdapter> adapterMap
+    + IExternVluchtAdapter getAdapter(String api)
+}
+
+class Vlucht {
+    - api : String
+    - vluchtNummer: String
+    - maatschappij: String
+    - vertrekLocatie: String
+    - bestemming: String
+    - prijs: double
+    - vertrekDatumTijd: LocalDateTime
+    - aankomstDatumTijd: LocalDateTime
+}
+
+class BoekVluchtDTO {
+    - vlucht : Vlucht
+    - username: String
+}
+
+VluchtController --> VluchtService : 1..1
+ExternVluchtAdapterFactory --> IExternVluchtAdapter : 1..*
+VluchtService --> IExternVluchtAdapter : 1..*
+VluchtService --> ExternVluchtAdapterFactory : 1..1
+
+'VluchtService ..> Vlucht : 1..*
+'VluchtController ..> Vlucht : 1..*
+'IExternVluchtAdapter ..> Vlucht : 1..*
+
+VluchtController ..> BoekVluchtDTO
+BoekVluchtDTO ..> Vlucht
+
+@enduml

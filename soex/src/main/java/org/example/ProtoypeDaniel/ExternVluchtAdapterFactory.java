@@ -22,11 +22,9 @@ public class ExternVluchtAdapterFactory {
 
     public IExternVluchtAdapter getAdapter(String api) {
         IExternVluchtAdapter adapter = adapterMap.get(api);
-
         if (adapter == null) {
             throw new IllegalArgumentException("No adapter found for API: " + api);
         }
-
         return adapter;
     }
 }

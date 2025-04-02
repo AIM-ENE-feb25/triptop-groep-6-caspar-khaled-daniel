@@ -42,7 +42,7 @@ public class SkyscannerAdapter implements IExternVluchtAdapter {
             }
             in.close();
 
-            return parseVluchten(response.toString());
+            return sorteerVluchten(response.toString());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -50,7 +50,7 @@ public class SkyscannerAdapter implements IExternVluchtAdapter {
         }
     }
 
-    public static List<Vlucht> parseVluchten(String jsonData) {
+    public static List<Vlucht> sorteerVluchten(String jsonData) {
         List<Vlucht> vluchten = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;

@@ -34,9 +34,4 @@ public class VluchtService {
         //sla vlucht op in DB
         return(response);
     }
-
-    public List<Vlucht> haalVluchtenOp(String username) {
-        //haal vluchten van gebruiker op uit DB
-        return new ArrayList<>();
-    }
 }

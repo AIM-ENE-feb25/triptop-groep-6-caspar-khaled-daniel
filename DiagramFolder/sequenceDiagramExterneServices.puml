@@ -1,0 +1,31 @@
+@startuml sequence diagram
+
+actor Frontend
+participant VluchtController
+participant VluchtService
+participant ExternVluchtAdapterFactory
+participant IExternVluchtAdapter
+participant KLMAdapter
+participant SkyscannerAdapter
+
+Frontend -> VluchtController : zoekVluchten(vertrek, bestemming, datum)
+VluchtController -> VluchtService : zoekVluchten(vertrek, bestemming, datum)
+VluchtService -> KLMAdapter : zoekVluchten(vertrek, bestemming, datum)
+KLMAdapter -> VluchtService : return lijst van Vluchten
+VluchtService -> SkyscannerAdapter : zoekVluchten(vertrek, bestemming, datum)
+SkyscannerAdapter -> VluchtService : return lijst van Vluchten
+VluchtService -> VluchtController : return lijst van Vluchten
+VluchtController -> Frontend : return lijst van Vluchten
+
+Frontend -> VluchtController : boekVlucht(BoekVluchtDTO)
+VluchtController -> VluchtService : boekVlucht(vlucht, username)
+VluchtService -> ExternVluchtAdapterFactory : getAdapter(api)
+ExternVluchtAdapterFactory -> IExternVluchtAdapter : haal alle adapters op
+IExternVluchtAdapter -> ExternVluchtAdapterFactory : return lijst met adapters
+ExternVluchtAdapterFactory -> VluchtService : return correcte adapter
+VluchtService -> KLMAdapter : boekVlucht(vlucht) 
+KLMAdapter -> VluchtService : response (success/failure)
+VluchtService -> VluchtController : response (success/failure)
+VluchtController -> Frontend : response (success/failure)
+
+@enduml
