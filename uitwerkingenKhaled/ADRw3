@@ -22,8 +22,10 @@ De applicatie moet kunnen omgaan met verschillende soorten bouwstenen. Met nadru
 
 Ik heb gekozen voor de **Factory** design pattern. Dit vanwege de volgende redenen:
 - Nieuwe functionaliteit zonder bestaande code aan te passen
-- Factory is beter om nieuwe instanties te creeren, terwijl strategy beter is om het gedrag van bestaande instanties aan te passen.
-
+- Factory is beter om nieuwe instanties te creëren, terwijl strategy beter is om het gedrag van bestaande instanties aan te passen.
+- centrale creëren
+- scheiding tussen creëren en gebruiken
 
 ## Consequences
 - Nieuwe bouwstenen kunnen eenvoudig worden toeggevoegd.
+- Maakt niet uit hoeveel bouwstenen aangemaakt worden, architectuur zal er altijd hetzelfde eruit zien.
