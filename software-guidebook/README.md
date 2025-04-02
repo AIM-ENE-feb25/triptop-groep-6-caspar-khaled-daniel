@@ -81,13 +81,13 @@ Voordat deze casusomschrijving tot stand kwam, heeft de opdrachtgever de volgend
 
 
 ![ContainerDiagram](../DiagramFolder/ContainerDiagram.png)
+![SequentieDiagramInloggen](../DiagramFolder/SequentieDiagramInloggen.png)
+![SequentieHuurAutosDiagram](../DiagramFolder/SequentieDiagramRentalCars.png)
+
 
 ###     7.2. Components
 
 ![componentdiagram](../DiagramFolder/componentdiagram.svg)
-
-![SequentieHuurAutosDiagram](../DiagramFolder/SequentieDiagramRentalCars.png)
-![SequentieDiagramInloggen](../DiagramFolder/SequentieDiagramInloggen.png)
 
 ###     7.3. Design & Code
 
