@@ -26,14 +26,8 @@ public class VluchtController {
         return vluchtService.zoekVluchten(vertrek, bestemming, parsedDatum);
     }
 
-
     @PostMapping("/boek")
     public String boekVlucht(@RequestBody BoekVluchtDTO boekVluchtDTO) {
         return vluchtService.boekVlucht(boekVluchtDTO.getVlucht(), boekVluchtDTO.getUsername());
-    }
-
-    @GetMapping("/ophalen")
-    public List<Vlucht> haalVluchtenOp(@RequestParam String username) {
-        return vluchtService.haalVluchtenOp(username);
     }
 }
