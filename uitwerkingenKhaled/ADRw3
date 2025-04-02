@@ -1,5 +1,5 @@
-**Date:** 28-03-2025
-**Decision: REJECTED**
+**Date:** 01-04-2025
+**Decision: ACCEPTED**
 
 
 # Ontwerpvraag
@@ -8,19 +8,20 @@
 ## Context
 
 De applicatie moet kunnen omgaan met verschillende soorten bouwstenen. Met nadruk op aanpassingen in code te minimilasiren bij het toevoegen van een nieuwe bouwesteen.
-## Consideren Option
+## Considered Options
 **Strategy**
 ![alt text](classDiagramStrategy.svg)
 
+
+**Factory**
+
+
 ## Decision
 
-Ik heb gekozen voor de **Strategy** design pattern. Dit vanwege de volgende redenen:
+Ik heb gekozen voor de **Factory** design pattern. Dit vanwege de volgende redenen:
 - Nieuwe functionaliteit zonder bestaande code aan te passen
-- Gedrag wordt geïnjecteerd (los van service) --> lange koppeling en hoge cohesion.
-- Makkelijk te testen -> elke strategy heeft een aparte klasse met een specifiek verantwoordelijkheid
+- Factory is beter om nieuwe instanties te creeren, terwijl strategy beter is om het gedrag van bestaande instanties aan te passen.
 
-
-Nadeel van dit allemaal is dat je veel klasses krijgt.
 
 ## Consequences
 - Nieuwe bouwstenen kunnen eenvoudig worden toeggevoegd.
