@@ -10,10 +10,12 @@
 De applicatie moet kunnen omgaan met verschillende soorten bouwstenen. Met nadruk op aanpassingen in code te minimilasiren bij het toevoegen van een nieuwe bouwesteen.
 ## Considered Options
 **Strategy**
-![alt text](classDiagramStrategy.svg)
-
+![Strategy diagram](classDiagramStrategy.svg)
 
 **Factory**
+
+![Factory diagram](classDiagramFactory.svg)
+
 
 
 ## Decision
@@ -25,7 +27,3 @@ Ik heb gekozen voor de **Factory** design pattern. Dit vanwege de volgende reden
 
 ## Consequences
 - Nieuwe bouwstenen kunnen eenvoudig worden toeggevoegd.
-- Elke strategy is los te testen
-- Responsibility seperation: Services = workdflow. strategys = logica.
-- Alleen strategy wijzigen bij wijzigingen van externa API'S 
-
