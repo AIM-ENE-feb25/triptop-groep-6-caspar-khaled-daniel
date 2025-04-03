@@ -450,10 +450,14 @@ Mijn keuze voor het prototype wordt Resilience.
  
 ## Decision
  
- 
 ## Consequences
 
 # 9. Deployment, Operation and Support
 
-> [!TIP]
-> Zelf beschrijven van wat je moet doen om de software te installeren en te kunnen runnen.
+Op dit moment bestaat er alleen een deels uitgewerkte backend. Dit houdt in dat er voor de frontend en database geen aparte dingen moeten worde geïnstalleerd. Hiervoor voldoet dus een frontend omgeving die react ondersteunt en een sql database omgeving.
+
+Voor de backend is er gebruik gemaakt van een springboot applicatie die gemaakt is in java met behulp van maven. Dit houdt in dat je een code omgeving moet gebruiken die maven ondersteunt. Door gebruik te maken van maven worden automatisch alle dependencies die wij gebruiken geïnstalleerd. Hiervoor hoeft er dus niets extra's te gebeurenn. Op dit moment voor het project zijn alle prototypes opgedeeld in verschillende mappen met daarin alle klasses. Voor het maken van daadwerkelijke applicatie code raden wij aan de algemene mappenstructuur te gebruiken zoals deze is uitgelegd op deze pagina: "[Structuring Your Code - Spring Boot 1.2.1 Reference](https://docs.spring.io/spring-boot/docs/1.2.1.RELEASE/reference/html/using-boot-structuring-your-code.html)".
+
+De frontend wordt gebuild met "npm build" door dit uit te voeren binnen de commandline wordt de frontend locaal opgestart voor gebruik. De database wordt opgezet in een dockercontainer om lokaal gebruik te kunnen maken van de database in samenwerking met de rest van de applicatie. 
+
+Tot slot makenn wij gebruik van versiebeheer doormiddel van github. Hierin maken wij voor elke nieuwe toevoeging aan de code een nieuwe branch. In deze branch wordt de nieuwe code geschreven samen met de bijbehorende testen. Als dit klaar is wordt er een pullrequest aangemaakt en deze wordt dan bekeken door een andere werknemer. Als dit is goedgekeurd wordt de branch gemerged naar de main branch en vanaf dan is het onderdeel van de nieuwste versie van de applicatie.
