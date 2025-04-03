@@ -72,8 +72,18 @@ Voordat deze casusomschrijving tot stand kwam, heeft de opdrachtgever de volgend
 
 ## 6. Principles
 
-> [!IMPORTANT]
-> Beschrijf zelf de belangrijkste architecturele en design principes die zijn toegepast in de software.
+###  Single Responsibility Principle (SRP)
+Elke klasse in de applicatie heeft een duidelijke verantwoordelijkheid. Zo is de `VluchtService` verantwoordelijk voor de logica rond het zoeken en boeken van vluchten, terwijl de verschillende adapterklassen zich richten op communicatie met externe API’s. Hierdoor blijft de code overzichtelijk en eenvoudiger te onderhouden.
+ 
+### Open/Closed Principle (OCP)
+Het systeem is ontworpen volgens het principe dat het *open staat voor uitbreiding*, maar *gesloten is voor aanpassing*. Nieuwe bouwstenen en externe services kunnen eenvoudig worden toegevoegd, zonder dat bestaande code aangepast hoeft te worden.
+ 
+###  Encapsulate What Varies (EWV)
+De delen van het systeem die gevoelig zijn voor verandering, zijn bewust geïsoleerd in aparte klassen. Alle adapters implementeren het `IExternVluchtAdapter` interface, waardoor hun specifieke logica volledig losstaat van de rest van het systeem. Dit maakt het mogelijk om elke adapter te onderhouden of aan te passen, zonder impact op andere onderdelen van de applicatie.
+
+ 
+###  Program to Interfaces, Not Implementations
+Binnen de `VluchtService` wordt gewerkt met het `IExternVluchtAdapter`-interface in plaats van met implementaties zoals `KLMAdapter` of `SkyscannerAdapter`. Hierdoor blijft de serviceklasse flexibel en losgekoppeld van specifieke adapters, wat het vervangen of uitbreiden van functionaliteit vereenvoudigt.
 
 ## 7. Software Architecture
 
