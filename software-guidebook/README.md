@@ -114,17 +114,26 @@ Dit voorbeeld is een voorbeeld waarin ook de rol van de reisagent wordt beschrev
 
 ![componentdiagram](../DiagramFolder/componentDiagramBouwsteen.svg)
 
+Hier is een eerste opzet te zien van de vershillende componenten voor de onderzoeksvraag behandeld in "[8.5 Hoe maak je de applicatie uitbreidbaar met nieuwe bouwstenen (28-03-2025)](#85-hoe-maak-je-de-applicatie-uitbreidbaar-met-nieuwe-bouwstenen-28-03-2025)
+" Naar aanleiding van het toepassen van een pattern zijn er later in het class diagram en sequentie diagram nog wel aanpassingen gedaan. Deze aannpassingen zijn te vinden in hoofdstuk "[7.3.1 Bouwstenen toevoegen](#731-bouwstenen-toevoegen)".
+
 ###    7.2.2 Externe services toevoegen
 
 ![componentdiagram](../DiagramFolder/componentDiagramExterneServices.svg)
+
+Hier is het component diagram te zien om de vraag van "[8.3. Externe service toevoegen](#83-externe-service-toevoegen)" te beantwoorden. In dit diagram is al te zien dat er voor elke api ee aparte adapter is om te communiceren met een api. Verder is er een controller die een verzoek krijgt van de frontend en vervolgens dit doorstuurt naar de service voor de logica.
 
 ###    7.2.3 Niet beschikbare services
 
 ![componentdiagram](../DiagramFolder/componentDiagramFallback.svg)
 
+Dit componentdiagram is ook een eerste opzet voor de onderzoeksvraag van hoofdstuk "[8.6 Hoe ga je om met aanroepen van externe services die niet beschikbaar zijn en toch verwacht wordt dat er waardevolle output gegeven wordt? (28-03-2025)](#86-hoe-ga-je-om-met-aanroepen-van-externe-services-die-niet-beschikbaar-zijn-en-toch-verwacht-wordt-dat-er-waardevolle-output-gegeven-wordt-28-03-2025)". In dit diagram is te zie dat een adapter ook gebruik maakt van een fallback component. Deze regelt het api verzoek af als de externe service niet beschikbaar is. Verdere uitwerking en implementatie hiervan is te zien in hoofdstuk "[7.3.3 Niet beschikbare services](#733-niet-beschikbare-services)". 
+
 ###    7.2.4 Samengevoegd component diagram
 
 ![componentdiagram](../DiagramFolder/componentdiagram.svg)
+
+Tot slot is hier een samengevoegd componentdiagram. In dit diagram is goed te zien dat de backend bestaat uit verschillende controllers, services, repositories en adapters voor elke bouwsteen. Ook is er goed te zie hoe elke adapter ook gebruik maakt van het fallback component. Dit is een verplichting voor een adapter en elke nieuwe adapter moet dan ook gebruik maken van dit component. Tot slot is er ook te zien dat sommige services meer dan 1 adapter hebben. Dit is omdat er dan meer dan 1 externe services aan verbonden zijn. Omdat elke externe service zijn eigen adapter nodig heeft zijn er dus mogelijk meer dan 1 adapters per service aanwezig.
 
 ##     7.3. Design & Code
 
@@ -145,6 +154,10 @@ Verder is dit ontwerp gemaakt op basis van het adapter pattern om te communicere
 In dit diagram is te zien hoe de flow van het systeem werkt. De frontend stuurt een verzoek naar de controller om vluchten te zoeken. Deze controller geeft dit door aan de vluchtservices die vervolgens ij alle adapters langsgaat om de vluchten op te zoeken. Deze adapters zoeken via een vertek, bestemming en de datum vervolgens alle beschikbare vluchten. De lijst met alle vluchten van alle adapters wordt vervolgens terug gestuurd naar de frontend.
 
 Daarnaast kan de frontend ook een vlucht object sturen naar de backend om een vlucht te boeken. Dit object wordt naar de controller gestuurd die het doorgeeft aan de service. De service haalt de naam van de gebruikte api voor de vlucht uit het object en stuurt dit naar de factory. De factory haalt via spring dependency injection een lijst op met alle beschikbare adapters, geimplementeerd volgens de interface. Vervolgens zoekt de factory de juiste adapter volgens de meegegeven api van de service en stuurt de correcte adapter terug naar de service. Tot slot stuurt de service het vlucht object door naar de correcte adapter die een boeking plaatst bij de api. Daarna wordt er feedback terug gegeven naar uiteindelijk de frontend.
+
+Tot slot de implementatie van een nieuwe externe service. Als er een nieuwe extere service beschikbaar komt voor ons systeem moet er maar 1 dingen worden toegevoegd. Er moet een nieuwe adapterklasse komen voor deze externe service. Deze klasse moet de interface implementeren met daarin alle methodes. Door dit goed toe te passen en de binnenkomende data te verwerken in een "Vlucht" object, kan de rest van de backend werken met de nieuwe externe service zonder verdere aanpassingen in de code. De service zal zelf gebruik gaan maken van de nieuwe adapter bij het zoeken van vluchten en de factory kan vanaf dan ook de adapter kiezen doormiddel van dependency injection over de interface.
+
+Voor deze dependendy injection is het belangrijk dat de nieuwe adapterklasse "@component("NAAM")" krijgt als annotatie. Hierdoor herkent het programma het als een nieuwe adapter en wordt deze meegenomen in de lijst met adapters.
 
 ###   7.3.3 Niet beschikbare services
 
@@ -354,36 +367,38 @@ accepted
 # 8.5 Hoe maak je de applicatie uitbreidbaar met nieuwe bouwstenen **Date:** 28-03-2025
 
 
-## Ontwerpvraag
+**Date:** 01-04-2025
+**Decision: ACCEPTED**
+ 
+ 
+# Ontwerpvraag
 **Hoe maak je de applicatie uitbreidbaar met nieuwe bouwstenen?**
-
+ 
 ## Context
-
+ 
 De applicatie moet kunnen omgaan met verschillende soorten bouwstenen. Met nadruk op aanpassingen in code te minimilasiren bij het toevoegen van een nieuwe bouwesteen.
-## Consideren Option
+## Considered Options
 **Strategy**
-![alt text](classDiagramStrategy.svg)
-
+![Strategy diagram](../DiagramFolder/classDiagramStrategy.svg)
+ 
+**Factory**
+ 
+![Factory diagram](../DiagramFolder/classDiagramFactory.svg)
+ 
+ 
+ 
 ## Decision
-
-Ik heb gekozen voor de **Strategy** design pattern. Dit vanwege de volgende redenen:
+ 
+Ik heb gekozen voor de **Factory** design pattern. Dit vanwege de volgende redenen:
 - Nieuwe functionaliteit zonder bestaande code aan te passen
-- Gedrag wordt geïnjecteerd (los van service) --> lange koppeling en hoge cohesion.
-- Makkelijk te testen -> elke strategy heeft een aparte klasse met een specifiek verantwoordelijkheid
-
-
-Nadeel van dit allemaal is dat je veel klasses krijgt.
-
+- Factory is beter om nieuwe instanties te creëren, terwijl strategy beter is om het gedrag van bestaande instanties aan te passen.
+- centrale creëren
+- scheiding tussen creëren en gebruiken
+ 
 ## Consequences
 - Nieuwe bouwstenen kunnen eenvoudig worden toeggevoegd.
-- Elke strategy is los te testen
-- Responsibility seperation: Services = workdflow. strategys = logica.
-- Alleen strategy wijzigen bij wijzigingen van externa API'S 
-Date: 28-03-2025
- 
-# Status
- 
-In progress
+- Maakt niet uit hoeveel bouwstenen aangemaakt worden, architectuur zal er altijd hetzelfde eruit zien.
+- Er kunnen eventuele mismatches ontstaan met interfaces (methodes beschikbaarheid, parameters, wat ze returnen)
  
 # 8.6 Hoe ga je om met aanroepen van externe services die niet beschikbaar zijn en toch verwacht wordt dat er waardevolle output gegeven wordt? **Date:** 28-03-2025
 
