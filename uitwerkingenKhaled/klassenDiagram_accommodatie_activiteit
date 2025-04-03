@@ -1,0 +1,97 @@
+@startuml 
+
+title Klassediagram – Activiteit & Accommodatie (Strategy Pattern)
+
+package "Strategy" {
+    interface BoekingStrategy <<strategy>> {
+        +verwerkBoeking(boekingData)
+    }
+}
+
+package "Accommodatie" {
+    class AccommodatieController <<controller>> {
+        -accommodatieService: AccommodatieService
+        +getAccommodatie(s)()
+        +boekAccommodatie()
+    }
+
+    class AccommodatieService <<service>> {
+        -accommodatieRepository: AccommodatieRepository
+        +haalAccommodatie(s)Op()
+        +verwerkBoeking()
+        -boekingStrategy: BoekingStrategy
+    }
+
+    class AccommodatieRepository <<repository>> {
+        -accommodaties: List<Accommodatie>
+        +save(accommodatie)
+        +findById(id): Accommodatie
+        +findAll(): List<Accommodatie>
+    }
+
+    class AirBnbBoekingStrategy <<strategy>> {
+        -adapter: AirBnbAdapter
+        -accommodatieRepository: AccommodatieRepository
+        +verwerkBoeking(boekingData)
+    }
+
+    class AirBnbAdapter <<adapter>> {
+        -apiKey: String
+        -endpointUrl: String
+        +haalDataVanAirbnb()
+        +stuurBoeking(boekingData)
+        +verwerkBoeking(boekingData)
+    }
+
+    AccommodatieController --> AccommodatieService : uses
+    AccommodatieService --> BoekingStrategy : uses
+    AccommodatieService --> AccommodatieRepository : uses
+    AirBnbBoekingStrategy ..|> BoekingStrategy : implements
+    AirBnbBoekingStrategy --> AirBnbAdapter : uses
+    AirBnbBoekingStrategy --> AccommodatieRepository : uses
+}
+
+package "Activiteit" {
+    class ActiviteitController <<controller>> {
+        -activiteitService: ActiviteitService
+        +getActiviteit(en)()
+        +boekActiviteit()
+    }
+
+    class ActiviteitService <<service>> {
+        -activiteitRepository: ActiviteitRepository
+        -boekingStrategy: BoekingStrategy
+        +haalActiviteit(en)Op()
+        +verwerkBoeking()
+    }
+
+    class ActiviteitRepository <<repository>> {
+        -activiteiten: List<Activiteit>
+        +save(activiteit)
+        +findById(id): Activiteit
+        +findAll(): List<Activiteit>
+    }
+
+    class TripAdvisorBoekingStrategy <<strategy>> {
+        -adapter: TripAdvisorAdapter
+        -activiteitRepository: ActiviteitRepository
+        +verwerkBoeking(boekingData)
+    }
+
+    class TripAdvisorAdapter <<adapter>> {
+        -apiKey: String
+        -endpointUrl: String
+        +haalDataVanTripAdvisor()
+        +stuurBoeking(boekingData)
+        +verwerkBoeking(boekingData)
+    }
+
+    ActiviteitController --> ActiviteitService : uses
+    ActiviteitService --> BoekingStrategy : uses
+    ActiviteitService --> ActiviteitRepository : uses
+    TripAdvisorBoekingStrategy ..|> BoekingStrategy : implements
+    TripAdvisorBoekingStrategy --> TripAdvisorAdapter : uses
+    TripAdvisorBoekingStrategy --> ActiviteitRepository : uses
+}
+
+@enduml

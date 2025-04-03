@@ -1,0 +1,73 @@
+@startuml
+
+    class BouwsteenFabriek {
+      - creators : Map<String, BouwsteenCreator>
+      + BouwsteenFabriek(creatorList : List<BouwsteenCreator>)
+      + createBouwsteen(type : String, id : Long, naam : String) : Bouwsteen
+    }
+
+    interface BouwsteenCreator {
+      + getType() : String
+      + create(id : Long, naam : String) : Bouwsteen
+    }
+
+    class ActiviteitCreator {
+      + getType() : String
+      + create(id : Long, naam : String) : Bouwsteen
+    }
+    class AccommodatieCreator {
+      + getType() : String
+      + create(id : Long, naam : String) : Bouwsteen
+    }
+    BouwsteenCreator <|.. "implements" ActiviteitCreator
+    BouwsteenCreator <|.. "implements" AccommodatieCreator
+
+
+    interface Bouwsteen {
+      + getId() : Long
+      + getNaam() : String
+      + getStatus() : BouwStatus
+      + setStatus(status : BouwStatus) : void
+    }
+
+    class Activiteit {
+      - id : Long
+      - naam : String
+      - status : BouwStatus
+      + Activiteit(id : Long, naam : String, status : BouwStatus)
+      + getId() : Long
+      + getNaam() : String
+      + getStatus() : BouwStatus
+      + setStatus(status : BouwStatus) : void
+    }
+
+    class Accommodatie {
+      - id : Long
+      - naam : String
+      - status : BouwStatus
+      + Accommodatie(id : Long, naam : String, status : BouwStatus)
+      + getId() : Long
+      + getNaam() : String
+      + getStatus() : BouwStatus
+      + setStatus(status : BouwStatus) : void
+    }
+    Bouwsteen <|.. "implements" Activiteit 
+    Bouwsteen <|..  "implements" Accommodatie
+
+
+    enum BouwStatus {
+      GEPLAND
+      GEREGELD
+      BETAALD
+      NIET_UITVOERBAAR
+      UITGEVOERD
+    }
+
+
+    BouwsteenFabriek --> "uses" BouwsteenCreator
+
+
+    BouwsteenCreator ..> Bouwsteen : creates
+
+
+@enduml

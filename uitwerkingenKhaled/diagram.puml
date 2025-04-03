@@ -1,0 +1,65 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Uitbreidbaarheid met Nieuwe Bouwstenen – Component Diagram Backend
+
+Container_Boundary(app, "Backend") {
+    
+    Component(vluchtcontroller, "vluchtController", "Spring Controller", "Geeft gebruikers vluchtinformatie en boekt vluchten.")
+    Component(vluchtservice, "vluchtService", "Spring Service", "Businesslogic voor vluchten.")
+    Component(vluchtrepository, "vluchtRepository", "Spring Repository", "Opslag van vluchtgegevens.")
+    Component(klmAdapter, "klmAdapter", "Spring Component", "Verbinding met KLM API.")
+    Component(skyscannerAdapter, "skyscannerAdapter", "Spring Component", "Verbinding met Skyscanner API.")
+    Component(FallbackUnavailableAPI, "FallbackUnavailableAPI", "Spring Component", "Fallback bij API-storingen.")
+
+    Component(accommodatieController, "accommodatieController", "Spring Controller", "Beheert accommodaties.")
+    Component(accommodatieService, "accommodatieService", "Spring Service", "Businesslogic voor accommodaties.")
+    Component(accommodatieRepository, "accommodatieRepository", "Spring Repository", "Opslag van accommodatiegegevens.")
+    Component(airBnbAdapter, "airBnbAdapter", "Spring Component", "Verbinding met AirBnB API.")
+
+    Component(activiteitController, "activiteitController", "Spring Controller", "Beheert activiteiten en excursies.")
+    Component(activiteitService, "activiteitService", "Spring Service", "Businesslogic voor activiteiten.")
+    Component(activiteitRepository, "activiteitRepository", "Spring Repository", "Opslag van activiteitgegevens.")
+    Component(tripAdvisorAdapter, "tripAdvisorAdapter", "Spring Component", "Verbinding met tripAdvisor API.")
+
+}
+
+Container(webApplicatie, "Web Applicatie", "React", "Biedt een webinterface voor reizigers en reisagenten.")
+ContainerDb(database, "Database", "SQL", "Slaat gegevens van vluchten, accommodaties en activiteiten op.")
+System_Ext(klmApi, "KLM API", "Biedt vluchtinformatie aan.")
+System_Ext(skyscannerApi, "Skyscanner API", "Biedt vluchtinformatie aan.")
+System_Ext(airbnbApi, "Airbnb API", "Biedt accommodaties aan.")
+System_Ext(tripAdvisorApi, "TripAdvisor API", "Biedt activiteiten aan.")
+
+
+Rel(webApplicatie, vluchtcontroller, "Maakt API-verzoek")
+Rel(webApplicatie, accommodatieController, "Maakt API-verzoek")
+Rel(webApplicatie, activiteitController, "Maakt API-verzoek")
+
+
+Rel(vluchtcontroller, vluchtservice, "Uses")
+Rel(vluchtservice, vluchtrepository, "Uses")
+Rel(klmAdapter, klmApi, "Maakt API-verzoek", "JSON/HTTPS")
+Rel(skyscannerAdapter, skyscannerApi, "Maakt API-verzoek", "JSON/HTTPS")
+Rel(vluchtservice, klmAdapter, "Uses")
+Rel(vluchtservice, skyscannerAdapter, "Uses")
+Rel(skyscannerAdapter, FallbackUnavailableAPI, "Uses")
+Rel(klmAdapter, FallbackUnavailableAPI, "Uses")
+
+Rel(accommodatieController, accommodatieService, "Uses")
+Rel(accommodatieService, accommodatieRepository, "Uses")
+Rel(accommodatieService, airBnbAdapter, "Uses")
+Rel(airBnbAdapter, airbnbApi, "Maakt API-verzoek", "JSON/HTTPS")
+
+
+Rel(activiteitController, activiteitService, "Uses")
+Rel(activiteitService, activiteitRepository, "Uses")
+Rel(activiteitService, tripAdvisorAdapter, "Uses")
+Rel(tripAdvisorAdapter, tripAdvisorApi, "Maakt API-verzoek", "JSON/HTTPS")
+
+
+Rel(vluchtrepository, database, "Leest/schrijft", "SQL")
+Rel(accommodatieRepository, database, "Leest/schrijft", "SQL")
+Rel(activiteitRepository, database, "Leest/schrijft", "SQL")
+
+@enduml

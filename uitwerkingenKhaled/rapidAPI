@@ -1,0 +1,36 @@
+
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+
+public class AirbnbSearch {
+    public static void main(String[] args) throws UnirestException {
+
+        String checkinDate = "25/03/2025";
+        String checkoutDate = "28/03/2025";
+
+       
+        String location = "london";
+        int guests = 2;
+        int priceMin = 50;
+        int priceMax = 300;
+
+   
+        String url = "https://airbnb19.p.rapidapi.com/api/v1/searchPropertyByLocationV2?" +
+                "location=" + location + "&checkin=" + checkinDate +
+                "&checkout=" + checkoutDate + "&adults=" + guests +
+                "&priceMin=" + priceMin + "&priceMax=" + priceMax;
+
+        try {
+            HttpResponse<String> response = Unirest.get(url)
+                    .header("x-rapidapi-key", "c63c8a897dmsh255bff7c1138dd5p1e6706jsncb079d013c46")
+                    .header("x-rapidapi-host", "airbnb19.p.rapidapi.com")
+                    .asString();
+
+            System.out.println(response.getBody());
+
+        } catch (UnirestException e) {
+            System.err.println("API request failed: " + e.getMessage());
+        }
+    }
+}
