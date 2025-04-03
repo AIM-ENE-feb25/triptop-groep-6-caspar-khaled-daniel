@@ -130,6 +130,8 @@ Dit voorbeeld is een voorbeeld waarin ook de rol van de reisagent wordt beschrev
 
 ![classDiagramOvernachtingen](../DiagramFolder/classDiagramOvernachtingenFallback.png)
 
+###    7.3.1 Bouwstenen toevoegen 
+
 ###    7.3.2 Externe services toevoegen
 
 ![classDiagramExterneServices](../DiagramFolder/classDaigramExterneServices.svg)
@@ -143,6 +145,8 @@ Verder is dit ontwerp gemaakt op basis van het adapter pattern om te communicere
 In dit diagram is te zien hoe de flow van het systeem werkt. De frontend stuurt een verzoek naar de controller om vluchten te zoeken. Deze controller geeft dit door aan de vluchtservices die vervolgens ij alle adapters langsgaat om de vluchten op te zoeken. Deze adapters zoeken via een vertek, bestemming en de datum vervolgens alle beschikbare vluchten. De lijst met alle vluchten van alle adapters wordt vervolgens terug gestuurd naar de frontend.
 
 Daarnaast kan de frontend ook een vlucht object sturen naar de backend om een vlucht te boeken. Dit object wordt naar de controller gestuurd die het doorgeeft aan de service. De service haalt de naam van de gebruikte api voor de vlucht uit het object en stuurt dit naar de factory. De factory haalt via spring dependency injection een lijst op met alle beschikbare adapters, geimplementeerd volgens de interface. Vervolgens zoekt de factory de juiste adapter volgens de meegegeven api van de service en stuurt de correcte adapter terug naar de service. Tot slot stuurt de service het vlucht object door naar de correcte adapter die een boeking plaatst bij de api. Daarna wordt er feedback terug gegeven naar uiteindelijk de frontend.
+
+###   7.3.3 Niet beschikbare services
 
 ## 8. Architectural Decision Records
 
