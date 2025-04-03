@@ -137,9 +137,37 @@ Tot slot is hier een samengevoegd componentdiagram. In dit diagram is goed te zi
 
 ##     7.3. Design & Code
 
-![classDiagramOvernachtingen](../DiagramFolder/classDiagramOvernachtingenFallback.png)
-
 ###    7.3.1 Bouwstenen toevoegen 
+
+![ClassDiagramFactory](../DiagramFolder/classDiagramFactoryNew.svg)
+
+Dit ontwerp is gebaseerd op het **factory pattern**, met als doel om op een flexibele en uitbreidbare manier nieuwe bouwstenen aan te maken. In dit systeem worden bouwstenen zoals *activiteiten* en *accommodaties* via een centrale klasse `BouwsteenFabriek` gecreëerd.
+ 
+De `BouwsteenFabriek` ontvangt bij het aanmaken een lijst van `BouwsteenCreator`-objecten. Elke `BouwsteenCreator` is verantwoordelijk voor het aanmaken van een specifiek type bouwsteen. Zo is er bijvoorbeeld een `ActiviteitCreator` voor het aanmaken van `Activiteit`-objecten en een `AccommodatieCreator` voor het aanmaken van `Accommodatie`-objecten. Beide implementeren het `BouwsteenCreator`-interface, waarin staat dat een `getType()`- en een `create()`-methode beschikbaar moeten zijn.
+ 
+Wanneer een nieuwe bouwsteen moet worden aangemaakt, bepaalt de `BouwsteenFabriek` op basis van het meegegeven type welke creator gebruikt moet worden. Deze creator maakt vervolgens een instantie van de bijbehorende bouwsteen met het opgegeven `id` en de `naam`.
+ 
+De `Bouwsteen` zelf is een interface dat gemeenschappelijke functionaliteit vastlegt zoals `getId()`, `getNaam()` en `getStatus()`. De concrete bouwstenen `Activiteit` en `Accommodatie` implementeren dit `Bouwsteen`-interface en bevatten naast de `id` en `naam` ook een `BouwStatus`. Deze status kan bijvoorbeeld aangeven of een bouwsteen **gepland**, **geregeld** of **uitgevoerd** is.
+
+![SequentieDiagramFactory](../DiagramFolder/sequentieDiagramFactory.svg)
+
+#### Flow van het sequentiediagram
+ 
+Dit sequentiediagram laat zien hoe een nieuwe bouwsteen wordt aangemaakt:
+ 
+1. **De frontend** stuurt een `POST `-request naar de `BouwsteenController`. In dat request zit het type bouwsteen dat aangemaakt moet worden (bijvoorbeeld `"activiteit"` of `"accommodatie"`), samen met een `id` en een `naam`.
+ 
+2. De `BouwsteenController` roept vervolgens de methode `createBouwsteen(type, id, naam)` aan bij de `BouwsteenFabriek`, die verantwoordelijk is voor het aanmaken van bouwstenen.
+ 
+3. In de `BouwsteenFabriek` wordt gekeken welk type er is doorgegeven:
+   - Als het type `"activiteit"` is, wordt de `ActiviteitCreator` gebruikt om een nieuw `Activiteit` object aan te maken.
+   - Als het type `"accommodatie"` is, wordt de `AccommodatieCreator` aangeroepen om een nieuw `Accommodatie` object te maken.
+ 
+4. De juiste creator maakt de bouwsteen aan en geeft deze terug aan de `BouwsteenFabriek`.
+ 
+5. De `BouwsteenFabriek` stuurt de nieuw aangemaakte bouwsteen door naar de `BouwsteenController`.
+ 
+6. Tot slot geeft de `BouwsteenController` de bouwsteen terug als reactie op het oorspronkelijke verzoek van de frontend.
 
 ###    7.3.2 Externe services toevoegen
 
@@ -404,6 +432,8 @@ Ik heb gekozen voor de **Factory** design pattern. Dit vanwege de volgende reden
 
 ## Context
  
+![classDiagramOvernachtingen](../DiagramFolder/classDiagramOvernachtingenFallback.png)
+
 Voor de API calls willen we een manier zodat er een fallback is wanneer de request mislukt. Hierbij moet er gedacht worden aan flexibiliteit in de requests.
  
 ## Considered Options
