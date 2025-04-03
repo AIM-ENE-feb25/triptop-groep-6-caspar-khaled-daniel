@@ -1,10 +1,20 @@
 resilience4j:
+  logging:
+    level:
+      io.github.resilience4j: DEBUG
   circuitbreaker:
     instances:
-      myCircuitBreaker:
-        registerHealthIndicator: true
+      overnachtingCircuitBreaker:
         failureRateThreshold: 50
-        slidingWindowSize: 100
+        slidingWindowSize: 10
         waitDurationInOpenState: 10000
         permittedNumberOfCallsInHalfOpenState: 10
-        eventConsumerBufferSize: 10
+  retry:
+    instances:
+      overnachtingRetry:
+        maxAttempts: 5
+        waitDuration: 500ms
+      retryExceptions:
+        - kong.unirest.UnirestException
+server:
+  port: 8081
