@@ -81,17 +81,46 @@ Voordat deze casusomschrijving tot stand kwam, heeft de opdrachtgever de volgend
 
 
 ![ContainerDiagram](../DiagramFolder/ContainerDiagram.png)
+
+Op basis van het contextdiagram hebben wij een container diagram gemaakt. Dit diagram laat de verschillende containers binnen het systeem zien. Zo hebben wij een frontend gemaakt in react. Deze communiceerd met de backend, geschreven in Java Springboot. De backend communiceerd vervolgens nog met de database om data op te slaan over een reis.
+
+Verder is er ten opzichte van het context diagram een verschil te zien in hoe het systeem communiceerd met externe services. Zo zijn er zowel externe services die met de frontend praten maar ook services die met de backend praten. Wij hebben hiervoor een keuze gemaakt binnen onzen groep en deze is beschreven in "[8.3. Externe service toevoegen](#83-externe-service-toevoegen)"
+
+Verder hebben wij de communicatie voor twee verschillende externe services toegevoegd als voorbeeld. Deze zijn hieronder te zien met de bijbehorende uitleg.
+
 ![SequentieDiagramInloggen](../DiagramFolder/SequentieDiagramInloggen.png)
+
+Allereerst is er een sequentiediagram gemaakt als voorbeeld voor het inloggen hier is te zien hoe de gebruiker probeert in te loggen via de frontend. Vervolgens wordt dit doorgestuurd naar de backend en dan naar wiremock. Als de gegevens juist zijn wordt de gebruiker ingelogd en wordt er een token opgeslagen in de frontend.
+
 ![SequentieHuurAutosDiagram](../DiagramFolder/SequentieDiagramRentalCars.png)
 
+Het tweede voorbeeld wat wij hebben verwerkt in een sequentie diagram is het huren van een auto. Dit is een complexer voorbeeld dan de eerste maar laat goed zien wat de algemene flow is van het communiceren met een externe service van een bouwsteen. Hierin is goed te zien dat een reiziger iets wilt huren, in dit geval een auto. Dit verzoek wordt doorgestuurd naar de backend en wordt vervolgens opgeslagen in de database voor de reisagent. Als de reisagent de webapplicatie opent, kan hij zien dat er een verzoek is van een reiziger voor een auto. De reisagent kan dan een aantal geschikte auto's uitzoeken en deze op slaan in de database voor de gebruiker. Tot slot kan de gebruiker dan een offerte uitkiezen en dit wordt dan opgeslagen in de database als de gekozen auto. 
 
-###     7.2. Components
+Dit voorbeeld is een voorbeeld waarin ook de rol van de reisagent wordt beschreven. Er zijn ook situaties met andere externe systemen waarin de reisagent geen rol heeft. Hierin maakt de gebruiker zelf contact met de externe service om bijvoorbeeld vluchten te zoeken. Vervolgens krijgt de gebruiker dan ook gelijk zelf alle data terug om een vlucht uit te kiezen.
+
+##     7.2. Components
+
+###    7.2.1 Bouwstenen toevoegen
+
+![componentdiagram](../DiagramFolder/componentDiagramBouwsteen.svg)
+
+###    7.2.2 Externe services toevoegen
+
+![componentdiagram](../DiagramFolder/componentDiagramExterneServices.svg)
+
+###    7.2.3 Niet beschikbare services
+
+![componentdiagram](../DiagramFolder/componentDiagramFallback.svg)
+
+###    7.2.4 Samengevoegd component diagram
 
 ![componentdiagram](../DiagramFolder/componentdiagram.svg)
 
-###     7.3. Design & Code
+##     7.3. Design & Code
 
 ![classDiagramOvernachtingen](../DiagramFolder/classDiagramOvernachtingenFallback.png)
+
+###    7.3.2 Externe services toevoegen
 
 ![classDiagramExterneServices](../DiagramFolder/classDaigramExterneServices.svg)
 
@@ -107,10 +136,38 @@ Daarnaast kan de frontend ook een vlucht object sturen naar de backend om een vl
 
 ## 8. Architectural Decision Records
 
+# 8.1 Waar worden de requests naar externe API's gedaan? **Date:** 03-04-2025
+ 
+## Status
+ 
+Accepted
+ 
+## Context
+ 
+We gaan onderzoeken waar de API calls het beste kunnen worden uitgevoerd, is dit in de front-end, back-end of allebij. Het doel is om de producite snelheid zo hoog mogelijk te houden door de datastromen te minimaliseren. Ook letten we op dubbele communicatie met een API.
+ 
+## Considered Options
+ 
+Waarom kunnen de API's niet op de front-end?
+- Bij betalingen moet je bepaalde gegevens verifiëren en hiervoor heb je de back-end nodig.
+ 
+Voorbeeld Omio:
+Als we eerst info op willen halen hebben we geen back-end nodig maar in een later stadium willen we wel kunnen betalen bij Omio en hiervoor is de backend nodig.
+ 
+## Decision
+ 
+Extern systeem communiceert alleen met de frontEnd als de backend nooit een de API call hoeft te maken met de desbetreffende externe service.
+ 
+## Consequences
+ 
+- Wanneer je API verzoeken hebt waarbij sommige verzoeken bestemd zijn voor de front-end en andere voor de back-end, zal je extra communicatie met de back-end nodig hebben om de informatie te krijgen.
+
+
+
 > [!IMPORTANT]
 > Voeg toe: 3 tot 5 ADR's die beslissingen beschrijven die zijn genomen tijdens het ontwerpen en bouwen van de software.
 
-# 8.1. Huur Auto's
+# 8.2 Huur Auto's
 Date: 21-03-2025
 
 # Status
@@ -159,7 +216,7 @@ Optie 2:
 We moeten geld/tijd/werk investeren om een API hiervoor te maken of een bestaande API betalen om bepaalde requests toe te voegen. Ook weten we niet of dit kan kwa wetten en of Booking.com dit toelaat
 
 
-# 8.2. ADR-002 **Date:** 21-03-2025
+# 8.3 ADR-002 **Date:** 21-03-2025
  
 
 ## Status
@@ -243,11 +300,7 @@ Booking.com blijft eventueel een optie voor toekomstig gebruik, bijvoorbeeld voo
 - Minder geschikt voor last-minute boekingen, waar hotels (zoals via Booking.com) doorgaans meer beschikbaarheid hebben.
 - Prijsvergelijking wordt moeilijker, omdat Airbnb meestal geen hotels aanbiedt en gebruikers geen directe vergelijking kunnen maken tussen hotel en woningaccommodaties.
 
-
-
-
-
-# 8.3. Externe service toevoegen
+# 8.4 Externe service toevoegen
 
 28-03-2025
 
@@ -284,7 +337,7 @@ accepted
 > [!TIP]
 > This section describes the resulting context, after applying the decision. All consequences should be listed here, not just the "positive" ones. A particular decision may have positive, negative, and neutral consequences, but all of them affect the team and project in the future.
 
-# 8.4. Hoe maak je de applicatie uitbreidbaar met nieuwe bouwstenen **Date:** 28-03-2025
+# 8.5 Hoe maak je de applicatie uitbreidbaar met nieuwe bouwstenen **Date:** 28-03-2025
 
 
 ## Ontwerpvraag
@@ -318,15 +371,17 @@ Date: 28-03-2025
  
 In progress
  
-# Context
+# 8.6 Hoe ga je om met aanroepen van externe services die niet beschikbaar zijn en toch verwacht wordt dat er waardevolle output gegeven wordt? **Date:** 28-03-2025
+
+## Context
  
 Voor de API calls willen we een manier zodat er een fallback is wanneer de request mislukt. Hierbij moet er gedacht worden aan flexibiliteit in de requests.
  
-# Considered Options
+## Considered Options
  
 Wanneer er API call gedaan wordt en de call faalt wil ik een fallback. Dit betekent dat ik zelf kan kiezen hoevaak de call opnieuw geprobeerd wordt en indien mijn keuze van calls falen er message/andere oplossing wordt gehanteerd.
  
-## Spring Cloud Circuit Breaker
+### Spring Cloud Circuit Breaker
  
 Deze lijst is tot stand gekomen door geeksforgeeks en medium searches. Ik ga alleen voor Hystrix even kort laten zien hoe het werkt. Ook is dit gebruikt: https://www.mymiller.name/wordpress/spring_circuit_breaker/choosing-the-right-circuit-breaker-a-comparison-of-implementations/
  
@@ -364,12 +419,12 @@ Limited support met Java. Niet direct geimplementeerd
 ## Keuze prototype
 Mijn keuze voor het prototype wordt Resilience.
  
-# Decision
+## Decision
  
  
-# Consequences
+## Consequences
 
-## 9. Deployment, Operation and Support
+# 9. Deployment, Operation and Support
 
 > [!TIP]
 > Zelf beschrijven van wat je moet doen om de software te installeren en te kunnen runnen.
