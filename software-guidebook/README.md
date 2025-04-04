@@ -94,7 +94,7 @@ Binnen de `VluchtService` wordt gewerkt met het `IExternVluchtAdapter`-interface
 
 Op basis van het contextdiagram hebben wij een container diagram gemaakt. Dit diagram laat de verschillende containers binnen het systeem zien. Zo hebben wij een frontend gemaakt in react. Deze communiceerd met de backend, geschreven in Java Springboot. De backend communiceerd vervolgens nog met de database om data op te slaan over een reis.
 
-Verder is er ten opzichte van het context diagram een verschil te zien in hoe het systeem communiceerd met externe services. Zo zijn er zowel externe services die met de frontend praten maar ook services die met de backend praten. Wij hebben hiervoor een keuze gemaakt binnen onzen groep en deze is beschreven in "[8.3. Externe service toevoegen](#83-externe-service-toevoegen)"
+Verder is er ten opzichte van het context diagram een verschil te zien in hoe het systeem communiceerd met externe services. Zo zijn er zowel externe services die met de frontend praten maar ook services die met de backend praten. Wij hebben hiervoor een keuze gemaakt binnen onzen groep en deze is beschreven in "[8.1 Waar worden de requests naar externe services gedaan?](#81-waar-worden-de-requests-naar-externe-services-gedaan)"
 
 Verder hebben wij de communicatie voor twee verschillende externe services toegevoegd als voorbeeld. Deze zijn hieronder te zien met de bijbehorende uitleg.
 
@@ -114,20 +114,20 @@ Dit voorbeeld is een voorbeeld waarin ook de rol van de reisagent wordt beschrev
 
 ![componentdiagram](../DiagramFolder/componentDiagramBouwsteen.svg)
 
-Hier is een eerste opzet te zien van de vershillende componenten voor de onderzoeksvraag behandeld in "[8.5 Hoe maak je de applicatie uitbreidbaar met nieuwe bouwstenen (28-03-2025)](#85-hoe-maak-je-de-applicatie-uitbreidbaar-met-nieuwe-bouwstenen-28-03-2025)
+Hier is een eerste opzet te zien van de vershillende componenten voor de onderzoeksvraag behandeld in "[8.5 Hoe maak je de applicatie uitbreidbaar met nieuwe bouwstenen](#85-hoe-maak-je-de-applicatie-uitbreidbaar-met-nieuwe-bouwstenen)
 " Naar aanleiding van het toepassen van een pattern zijn er later in het class diagram en sequentie diagram nog wel aanpassingen gedaan. Deze aannpassingen zijn te vinden in hoofdstuk "[7.3.1 Bouwstenen toevoegen](#731-bouwstenen-toevoegen)".
 
 ###    7.2.2 Externe services toevoegen
 
 ![componentdiagram](../DiagramFolder/componentDiagramExterneServices.svg)
 
-Hier is het component diagram te zien om de vraag van "[8.3. Externe service toevoegen](#83-externe-service-toevoegen)" te beantwoorden. In dit diagram is al te zien dat er voor elke api ee aparte adapter is om te communiceren met een api. Verder is er een controller die een verzoek krijgt van de frontend en vervolgens dit doorstuurt naar de service voor de logica.
+Hier is het component diagram te zien om de vraag van "[8.4. Externe service toevoegen](#84-externe-service-toevoegen)" te beantwoorden. In dit diagram is al te zien dat er voor elke api ee aparte adapter is om te communiceren met een api. Verder is er een controller die een verzoek krijgt van de frontend en vervolgens dit doorstuurt naar de service voor de logica.
 
 ###    7.2.3 Niet beschikbare services
 
 ![componentdiagram](../DiagramFolder/componentDiagramFallback.svg)
 
-Dit componentdiagram is ook een eerste opzet voor de onderzoeksvraag van hoofdstuk "[8.6 Hoe ga je om met aanroepen van externe services die niet beschikbaar zijn en toch verwacht wordt dat er waardevolle output gegeven wordt? (28-03-2025)](#86-hoe-ga-je-om-met-aanroepen-van-externe-services-die-niet-beschikbaar-zijn-en-toch-verwacht-wordt-dat-er-waardevolle-output-gegeven-wordt-28-03-2025)". In dit diagram is te zie dat een adapter ook gebruik maakt van een fallback component. Deze regelt het api verzoek af als de externe service niet beschikbaar is. Verdere uitwerking en implementatie hiervan is te zien in hoofdstuk "[7.3.3 Niet beschikbare services](#733-niet-beschikbare-services)". 
+Dit componentdiagram is ook een eerste opzet voor de onderzoeksvraag van hoofdstuk "[8.6 Hoe ga je om met aanroepen van externe services die niet beschikbaar zijn en toch verwacht wordt dat er waardevolle output gegeven wordt?](#86-hoe-ga-je-om-met-aanroepen-van-externe-services-die-niet-beschikbaar-zijn-en-toch-verwacht-wordt-dat-er-waardevolle-output-gegeven-wordt)". In dit diagram is te zie dat een adapter ook gebruik maakt van een fallback component. Deze regelt het api verzoek af als de externe service niet beschikbaar is. Verdere uitwerking en implementatie hiervan is te zien in hoofdstuk "[7.3.3 Niet beschikbare services](#733-niet-beschikbare-services)". 
 
 ###    7.2.4 Samengevoegd component diagram
 
@@ -173,7 +173,7 @@ Dit sequentiediagram laat zien hoe een nieuwe bouwsteen wordt aangemaakt:
 
 ![classDiagramExterneServices](../DiagramFolder/classDaigramExterneServices.svg)
 
-Dit klassediagram is gemaakt en gecorrigeerd naar aanleiding van het gemaakte prototype "[8.3. Externe service toevoegen](#83-externe-service-toevoegen)". Naar aanleidng van de 1e verie is de repository verwijderd omdat dit geen toegevoegde waarde had voor het prototype. 
+Dit klassediagram is gemaakt en gecorrigeerd naar aanleiding van het gemaakte prototype "[8.4. Externe service toevoegen](#84-externe-service-toevoegen)". Naar aanleidng van de 1e verie is de repository verwijderd omdat dit geen toegevoegde waarde had voor het prototype. 
 
 Verder is dit ontwerp gemaakt op basis van het adapter pattern om te communiceren met alle api's. Elke api krijgt zijn eigen adapterklasse om de unieke manier van communiceren te gebruiken. Ook is er gebruik gemaakt van een factoryklasse. Dit houdt in dat deze factory gebruikt wordt om een specifieke api te gebruiken. Bij het boeken moet er een specifieke api gekozen worden om de vlucht te boeken en deze wordt gekozen door de frontend en gebruikt door de factory om deze aan te wijzen aan de service. Hieronder in het sequentiediagram is het volledige pad te zien voor het zoeken en boeken van een vlucht volgens dit prototype.
 
@@ -191,7 +191,9 @@ Voor deze dependendy injection is het belangrijk dat de nieuwe adapterklasse "@c
 
 ## 8. Architectural Decision Records
 
-# 8.1 Waar worden de requests naar externe API's gedaan? **Date:** 03-04-2025
+# 8.1 Waar worden de requests naar externe services gedaan? 
+
+**Date:** 03-04-2025
  
 ## Status
  
@@ -271,7 +273,7 @@ Optie 2:
 We moeten geld/tijd/werk investeren om een API hiervoor te maken of een bestaande API betalen om bepaalde requests toe te voegen. Ook weten we niet of dit kan kwa wetten en of Booking.com dit toelaat
 
 
-# 8.3 ADR-002 **Date:** 21-03-2025
+# 8.3 Accomodatieverhuur **Date:** 21-03-2025
  
 
 ## Status
@@ -392,7 +394,7 @@ accepted
 > [!TIP]
 > This section describes the resulting context, after applying the decision. All consequences should be listed here, not just the "positive" ones. A particular decision may have positive, negative, and neutral consequences, but all of them affect the team and project in the future.
 
-# 8.5 Hoe maak je de applicatie uitbreidbaar met nieuwe bouwstenen **Date:** 28-03-2025
+# 8.5 Hoe maak je de applicatie uitbreidbaar met nieuwe bouwstenen
 
 
 **Date:** 01-04-2025
@@ -428,7 +430,9 @@ Ik heb gekozen voor de **Factory** design pattern. Dit vanwege de volgende reden
 - Maakt niet uit hoeveel bouwstenen aangemaakt worden, architectuur zal er altijd hetzelfde eruit zien.
 - Er kunnen eventuele mismatches ontstaan met interfaces (methodes beschikbaarheid, parameters, wat ze returnen)
  
-# 8.6 Hoe ga je om met aanroepen van externe services die niet beschikbaar zijn en toch verwacht wordt dat er waardevolle output gegeven wordt? **Date:** 28-03-2025
+# 8.6 Hoe ga je om met aanroepen van externe services die niet beschikbaar zijn en toch verwacht wordt dat er waardevolle output gegeven wordt? 
+
+**Date:** 28-03-2025
 
 ## Context
  
