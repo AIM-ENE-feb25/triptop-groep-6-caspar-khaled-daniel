@@ -408,8 +408,14 @@ accepted
 
 ## Consequences
 
-> [!TIP]
-> This section describes the resulting context, after applying the decision. All consequences should be listed here, not just the "positive" ones. A particular decision may have positive, negative, and neutral consequences, but all of them affect the team and project in the future.
+
+- Elke adapter maakt gebruik van een interface en moet hierbij alle methodes implementeren.
+
+- Van elke adapter wordt automatisch gebruik gemaakt bij een algemene api call.
+
+- Uit de lijst met alle adapters kan 1 specifieke adapter worden gekozen voor gebruik.
+
+Verder zijn er nog consequenties voor mijn prototype in combinatie met die van Khaled en Caspar. Caspar heeft gewerkt aan een fallback voor een api. Dit houdt in dat als er geen response komt van de api deze fallback optreedt om het opnieuw te proberen, dummy data terug te sturen of een error te geven. Dit moet worden geïmplementeerd door "@circuitbreaker" en "@retry" toe te voegen aan de adapter methodes.
 
 # 8.5 Hoe maak je de applicatie uitbreidbaar met nieuwe bouwstenen
 
