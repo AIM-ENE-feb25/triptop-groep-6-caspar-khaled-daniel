@@ -1,0 +1,39 @@
+@startuml 
+
+class OvernachtingController {
+    - OvernachtingService overnachtingService
+    + List<Overnachting> zoekOvernachtingen(OvernachtingFilter overnachtingFilter)
+}
+
+class OvernachtingService {
+    - OvernachtingRepository overnachtingRepository
+    + List<Overnachting> zoekOvernachtingen(OvernachtingFilter overnachtingFilter)
+
+}
+
+class OvernachtingAdapter {
+    + List<Overnachting> zoekOvernachtingen(OvernachtingFilter overnachtingFilter)
+    + String fallbackMethod()
+}
+
+class Overnachting {
+    private String hotelName;
+    private double reviewScore;
+    private double latitude;
+    private double longitude;
+    private String cityName;
+}
+
+class OvernachtingFilter {
+    private LocalDate arrivalDate;
+    private LocalDate departureDate;
+    private int roomQty;
+    private int guestQty;
+    private String bbox;
+}
+
+OvernachtingController --> OvernachtingService
+OvernachtingService --> OvernachtingAdapter
+
+@enduml
+

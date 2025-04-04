@@ -1,14 +1,18 @@
 resilience4j:
-  logging:
-    level:
-      io.github.resilience4j: DEBUG
   circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 6
+        minimumNumberOfCalls: 4
+        failureRateThreshold: 50
+        permittedNumberOfCallsInHalfOpenState: 3
+        waitDurationInOpenState: PT30S
+        automaticTransitionFromOpenToHalfOpenEnabled: true
     instances:
       overnachtingCircuitBreaker:
-        failureRateThreshold: 50
-        slidingWindowSize: 10
-        waitDurationInOpenState: 10000
-        permittedNumberOfCallsInHalfOpenState: 10
+        baseConfig: default
   retry:
     instances:
       overnachtingRetry:

@@ -30,7 +30,7 @@ public class BookingComAdapter {
         }
     }
 
-//    @CircuitBreaker(name = "overnachtingCircuitBreaker", fallbackMethod = "fallbackMethod")
+    @CircuitBreaker(name = "overnachtingCircuitBreaker", fallbackMethod = "fallbackMethod")
     @Retry(name = "overnachtingRetry")
     public List<Overnachting> zoekOvernachtingen(OvernachtingFilter overnachtingFilter) {
         System.out.println("Calling API");
