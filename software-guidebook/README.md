@@ -415,7 +415,7 @@ Dus doormiddel van dit prototype is aangetoond dat dit ontwerp ook in de praktij
 
 - Uit de lijst met alle adapters kan 1 specifieke adapter worden gekozen voor gebruik.
 
-Verder zijn er nog consequenties voor mijn prototype in combinatie met die van Khaled en Caspar. Caspar heeft gewerkt aan een fallback voor een api. Dit houdt in dat als er geen response komt van de api deze fallback optreedt om het opnieuw te proberen, dummy data terug te sturen of een error te geven. Dit moet worden geïmplementeerd door "@circuitbreaker" en "@retry" toe te voegen aan de adapter methodes.
+Verder zijn er nog consequenties voor mijn prototype in combinatie met die van Khaled en Caspar. Caspar heeft gewerkt aan een fallback voor een api. Dit houdt in dat als er geen response komt van de api deze fallback optreedt om het opnieuw te proberen, dummy data terug te sturen of een error te geven. Dit moet worden geïmplementeerd door "@circuitbreaker" en "@retry" toe te voegen aan de adapter methodes. Voor het prototype van Khaled is eruit gekomen dat er een bouwsteen interface moet worden geïmplementeerd voor alle domeinklasses. Dit houdt in dat voor mijn domeinklasse Vlucht een implementatie zou moeten komen van het interface bouwsteen.
 
 # 8.5 Hoe maak je de applicatie uitbreidbaar met nieuwe bouwstenen
 
