@@ -378,6 +378,9 @@ Booking.com blijft eventueel een optie voor toekomstig gebruik, bijvoorbeeld voo
 
 28-03-2025
 
+## Status
+
+accepted
 
 ## Context
 
@@ -402,9 +405,6 @@ Verder is de repository klasse niet gemaakt omdat dit niks toevoegd aan de vraag
 Dus doormiddel van dit prototype is aangetoond dat dit ontwerp ook in de praktijk gebruikt kan worden.
 
 
-## Status
-
-accepted
 
 ## Consequences
 
@@ -422,7 +422,8 @@ Verder zijn er nog consequenties voor mijn prototype in combinatie met die van K
 
 **Date:** 01-04-2025
 **Decision: ACCEPTED**
- 
+ ## Status: accepted
+
  
 # Ontwerpvraag
 **Hoe maak je de applicatie uitbreidbaar met nieuwe bouwstenen?**
@@ -435,9 +436,9 @@ De applicatie moet kunnen omgaan met verschillende soorten bouwstenen. Met nadru
 ![Strategy diagram](../DiagramFolder/classDiagramStrategy.svg)
  
 **Factory**
- 
 ![Factory diagram](../DiagramFolder/classDiagramFactory.svg)
- 
+
+In dit diagram begint alles met de hoofdklasse Bouwsteen. Hierin staan de eigenschappen die alle bouwstenen hebben. Daarna komen de klassen Activiteit en Accommodatie. Deze klassen erven de informatie van Bouwsteen. Om de bouwstenen makkelijk te maken, is er de klasse BouwsteenFabriek. Deze fabriek gebruikt speciale creator klassen, zoals ActiviteitCreator en AccommodatieCreator, om de juiste bouwsteen te maken. Er is ook een enum BouwStatus. Dit is een lijst van mogelijke statussen voor een bouwsteen, zodat duidelijk is welke status elke bouwsteen heeft.
  
  
 ## Decision
@@ -447,6 +448,8 @@ Ik heb gekozen voor de **Factory** design pattern. Dit vanwege de volgende reden
 - Factory is beter om nieuwe instanties te creëren, terwijl strategy beter is om het gedrag van bestaande instanties aan te passen.
 - centrale creëren
 - scheiding tussen creëren en gebruiken
+
+Dit heb ik kunnen bewijzen doormiddel van een prototype die de factory pattern implementeerd. Er kunnen met dit prototype nieuwe bouwstenen kunnen toegevoegd zonder het huidige code te veranderen.
  
 ## Consequences
 - Nieuwe bouwstenen kunnen eenvoudig worden toeggevoegd.
@@ -456,6 +459,7 @@ Ik heb gekozen voor de **Factory** design pattern. Dit vanwege de volgende reden
 # 8.6 Hoe ga je om met aanroepen van externe services die niet beschikbaar zijn en toch verwacht wordt dat er waardevolle output gegeven wordt? 
 
 **Date:** 28-03-2025
+## Status: Undecided
 
 ## Context
  
