@@ -1,24 +1,24 @@
-resilience4j:
-  circuitbreaker:
-    configs:
-      default:
-        registerHealthIndicator: true
-        slidingWindowType: COUNT_BASED
-        slidingWindowSize: 6
-        minimumNumberOfCalls: 4
-        failureRateThreshold: 50
-        permittedNumberOfCallsInHalfOpenState: 3
-        waitDurationInOpenState: PT30S
-        automaticTransitionFromOpenToHalfOpenEnabled: true
-    instances:
-      overnachtingCircuitBreaker:
-        baseConfig: default
-  retry:
-    instances:
-      overnachtingRetry:
-        maxAttempts: 5
-        waitDuration: 500ms
-      retryExceptions:
-        - kong.unirest.UnirestException
-server:
-  port: 8081
+#resilience4j:
+#  circuitbreaker:
+#    configs:
+#      default:
+#        registerHealthIndicator: true
+#        slidingWindowType: COUNT_BASED
+#        slidingWindowSize: 6
+#        minimumNumberOfCalls: 4
+#        failureRateThreshold: 50
+#        permittedNumberOfCallsInHalfOpenState: 3
+#        waitDurationInOpenState: PT30S
+#        automaticTransitionFromOpenToHalfOpenEnabled: true
+#    instances:
+#      overnachtingCircuitBreaker:
+#        baseConfig: default
+#  retry:
+#    instances:
+#      overnachtingRetry:
+#        maxAttempts: 5
+#        waitDuration: 500ms
+#        retryExceptions:
+#          - java.lang.Exception
+#server:
+#  port: 8081

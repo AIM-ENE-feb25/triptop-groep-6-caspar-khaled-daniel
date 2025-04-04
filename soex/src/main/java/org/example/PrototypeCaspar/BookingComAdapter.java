@@ -37,6 +37,7 @@ public class BookingComAdapter {
 
         String RAPIDAPI_HOST = getCurrentApiHost();
 
+
         HttpResponse<JsonNode> response = Unirest.get("https://" + RAPIDAPI_HOST + "/properties/v2/list-by-map")
                 .header("X-RapidAPI-Key", RAPIDAPI_KEY)
                 .header("X-RapidAPI-Host", RAPIDAPI_HOST)
@@ -63,25 +64,21 @@ public class BookingComAdapter {
             for (int i = 0; i < results.length(); i++) {
                 JSONObject obj = results.getJSONObject(i);
 
-                // Extract values from JSON response
                 String hotelName = obj.optString("hotel_name", "Unknown Hotel");
-                double reviewScore = obj.optDouble("review_score", 0.0);  // Default value 0.0 if not present
-                double latitude = obj.optDouble("latitude", 0.0);  // Default value 0.0 if not present
-                double longitude = obj.optDouble("longitude", 0.0);  // Default value 0.0 if not present
+                double reviewScore = obj.optDouble("review_score", 0.0);
+                double latitude = obj.optDouble("latitude", 0.0);
+                double longitude = obj.optDouble("longitude", 0.0);
                 String cityName = obj.optString("city_name_en", "Unknown City");
 
-//                System.out.println("Extracted: Hotel = " + hotelName + ", Review Score = " + reviewScore
-//                        + ", Latitude = " + latitude + ", Longitude = " + longitude + ", City = " + cityName);
-
-                // Add the extracted data to the Overnachting list
                 overnachtingen.add(new Overnachting(hotelName, reviewScore, latitude, longitude, cityName));
             }
 
         return overnachtingen;
     }
 
-    public List<Overnachting> fallbackMethod(OvernachtingFilter overnachtingFilter, Throwable throwable) {
+    public List<Overnachting> fallbackMethod(Throwable exception) {
         System.out.println("CircuitBreaker werkt");
+//        System.out.println(exception.getClass().getName());
         return new ArrayList<>();
     }
 
