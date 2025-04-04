@@ -30,7 +30,7 @@ public class BookingComAdapter {
         }
     }
 
-    @CircuitBreaker(name = "overnachtingCircuitBreaker", fallbackMethod = "fallbackMethod")
+//    @CircuitBreaker(name = "overnachtingCircuitBreaker", fallbackMethod = "fallbackMethod")
     @Retry(name = "overnachtingRetry")
     public List<Overnachting> zoekOvernachtingen(OvernachtingFilter overnachtingFilter) {
         System.out.println("Calling API");
@@ -78,8 +78,14 @@ public class BookingComAdapter {
 
     public List<Overnachting> fallbackMethod(Throwable exception) {
         System.out.println("CircuitBreaker werkt");
-//        System.out.println(exception.getClass().getName());
-        return new ArrayList<>();
+//       System.out.println(exception.getClass().getName());
+        List<Overnachting> fallbackHotels = new ArrayList<>();
+        fallbackHotels.add(new Overnachting("Hotel Fallback One", 8.2, 52.3702, 4.8952, "Amsterdam"));
+        fallbackHotels.add(new Overnachting("Backup Stay Inn", 7.8, 51.9244, 4.4777, "Rotterdam"));
+        fallbackHotels.add(new Overnachting("Placeholder Palace", 9.1, 50.8503, 4.3517, "Brussels"));
+        fallbackHotels.add(new Overnachting("Dummy Deluxe", 6.5, 48.8566, 2.3522, "Paris"));
+
+        return fallbackHotels;
     }
 
 }
