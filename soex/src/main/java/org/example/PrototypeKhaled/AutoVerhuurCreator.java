@@ -11,6 +11,6 @@ public class AutoVerhuurCreator implements BouwsteenCreator{
 
     @Override
     public Bouwsteen create(Long id, String naam) {
-        return new Accommodatie(id, naam, BouwStatus.GEPLAND);
+        return new AutoVerhuur(id, naam, BouwStatus.GEPLAND);
     }
 }
