@@ -1,0 +1,29 @@
+@startuml sequence diagram
+ 
+actor Frontend
+participant OvernachtingController
+participant OvernachtingService
+participant OvernachtingAdapter
+ 
+Frontend -> OvernachtingController : zoekOvernachtingen(arrivalDate, departureDate, roomQty, guestQty, bbox)
+OvernachtingController -> OvernachtingService : zoekOvernachtingen(arrivalDate, departureDate, roomQty, guestQty, bbox)
+OvernachtingService -> OvernachtingAdapter : zoekOvernachtingen(arrivalDate, departureDate, roomQty, guestQty, bbox)
+alt incorrecte api call
+ loop retry mechanism
+        OvernachtingAdapter -> OvernachtingAdapter : retry zoekOvernachtingen(arrivalDate, departureDate, roomQty, guestQty, bbox)
+        alt success after retry
+            OvernachtingAdapter -> OvernachtingService : return(List<Overnachting>)
+            OvernachtingService -> OvernachtingController : return(List<Overnachting>)
+            OvernachtingController -> Frontend : return(List<Overnachting>)
+        else circuitbreaker gaat open
+            OvernachtingAdapter -> OvernachtingService : return(errorMessage)
+            OvernachtingService -> OvernachtingController : return(errorMessage)
+            OvernachtingController -> Frontend : return(errorMessage)
+        end
+    end
+end
+ 
+ 
+ 
+ 
+@enduml

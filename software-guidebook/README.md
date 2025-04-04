@@ -189,6 +189,23 @@ Voor deze dependendy injection is het belangrijk dat de nieuwe adapterklasse "@c
 
 ###   7.3.3 Niet beschikbare services
 
+![classDiagramFallback](../DiagramFolder/classDiagramPrototypeFallback.svg)
+
+Vergeleken met het classDiagram in het ADR zijn veel methodes weg gehaald die niet van toepassing waren voor het prototype. Daarnaast heb ik de interface weg gehaald, omdat als dit gebruikt zou worden het meer een definition of done zou zijn. Dit houdt in dat voor het project in de d.o.d. kan staan dat elke adapter moet beschikken over een circuitbreaker en retry afhandeling in verband met overloading.
+
+Op het moment wordt er ook nog een list met overnachtingen terug gestuurd als de fallback methoden aangeroepen wordt maar als die echt uigevoerd wordt zal dit een omgezet worden naar een userfriendly message.
+
+![sequentieDiagramFallback](../DiagramFolder/SequenceDiagramFallback.svg)
+
+Als eerste wordt er door de frontend een verzoek gedaan naar de controller. Daarna wordt dit verzoek doorgezet tot de adapter klasse.
+
+In de adapter klasse wordt als eerst laten zien dat de API call incorrect is. Hier door gaan we in een loop van retry's die zelf te specificeren zijn.
+
+Daarna hebben we eerst een succesvolle retry waarbij je een lijst met overnachtingen terug stuurt naar de front-end
+
+Als de retry niet succesvol is wordt de circuitbreaker opengezet en kunnen er voor een bepaalde tijd geen requests meer gestuurd worden naar de API.
+
+
 ## 8. Architectural Decision Records
 
 # 8.1 Waar worden de requests naar externe services gedaan? 
