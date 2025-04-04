@@ -438,7 +438,7 @@ Ik heb gekozen voor de **Factory** design pattern. Dit vanwege de volgende reden
  
 ![classDiagramOvernachtingen](../DiagramFolder/classDiagramOvernachtingenFallback.png)
 
-Voor de API calls willen we een manier zodat er een fallback is wanneer de request mislukt. Hierbij moet er gedacht worden aan flexibiliteit in de requests.
+De class diagram heeft een normale springboot structuur waarbij ik voor externe services een adapter ga gebruiken. Het voorbeeld gaat dan ook over een enekele overnachtings API. Ik gebruik een interface om ervoor te zorgen dat alle adapters gebruik moeten maken van de fallback methoden.
  
 ## Considered Options
  
@@ -483,8 +483,29 @@ Limited support met Java. Niet direct geimplementeerd
 Mijn keuze voor het prototype wordt Resilience.
  
 ## Decision
+-In mijn prototype is gelukt om de circuitbreaker te gebruiken op een simplistische manier. Dit betekent dat je bij error zelf een lege Overnachtings array terug gan geven. Achteraf gezien heeft dit gedeelte ervan niet erg veel zin, want je kan geen neppe bouwstenen invoeren. Daarnaast is het juist wel handig om als we 10000 requests krijgen voor hotels dat je na bijvoorbeeld 6 gefaalde requests het voor x aantal seconden stil zet om hierop te besparen.
+-Ik kreeg de retry niet werkend als die samen moest werken met de circuitbreaker wat in bronnen wel kon. Als dit kan zou het dus betekenen dat je bij een gefaald request van een user nog een aantal keer de requests kan sturen.
+ 
+Optie 1:
+Werk het prototype verder uit door de circuitbreaker en retry hand in hand te laten werken.
+-Nuttig als je erg veel requests hebt die je wil stoppen door de circuitbreaker op open te zetten.
+-Nuttig dat het meerdere keren geprobeerd wordt.
+ 
+Optie 2:
+Gebruik de normale error medling naar de gebruiker.
+ 
  
 ## Consequences
+Optie 1:
+-Onderzoek tijd om het werkend te krijgen.
+-Kost implementatie tijd per API zeker als we erg veel externe services gaan toevoegen.
+-De fallback method kan net zo goed een simpele error afhandeling zijn.
+ 
+Optie 2:
+-Zal altijd requests blijven sturen.
+ 
+De class diagram heeft een normale springboot structuur waarbij ik voor externe services een adapter ga gebruiken. Het voorbeeld gaat dan ook over een enekele overnachtings API. Ik gebruik een interface om ervoor te zorgen dat alle adapters gebruik moeten maken van de fallback methoden.
+ 
 
 # 9. Deployment, Operation and Support
 
